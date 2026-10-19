@@ -1,0 +1,8 @@
+{
+  "name": "Roop Cliff Bhopal",
+  "description": "Discover Roop Cliff, a considered stay in MP Nagar, Bhopal. Explore rooms, amenities, dining, location, and interactive booking preview.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
