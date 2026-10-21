@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useBooking, formatCurrency } from '../context/BookingContext';
 import { Room, GalleryMediaItem, CustomerEnquiry } from '../types';
 import { Footer } from '../components/Footer';
+import { HotelLogo } from '../components/HotelLogo';
 
 export const AdminPage: React.FC = () => {
   const {
@@ -160,8 +161,11 @@ export const AdminPage: React.FC = () => {
 
           <section className="content-wrap" style={{ maxWidth: '520px', margin: '0 auto', width: '100%' }}>
             <div className="surface-card">
-              <span className="eyebrow">AUTHENTICATION REQUIRED</span>
-              <h2>Staff Sign-In</h2>
+              <div style={{ textAlign: 'center', marginBottom: '22px' }}>
+                <HotelLogo size="lg" theme="dark" showSubtitle={false} linkToHome={false} />
+              </div>
+              <span className="eyebrow" style={{ textAlign: 'center' }}>AUTHENTICATION REQUIRED</span>
+              <h2 style={{ textAlign: 'center', marginBottom: '8px' }}>Staff Sign-In</h2>
               <p style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '20px' }}>
                 Enter the verified management credentials to manage room rates, media, and booking channels.
               </p>
@@ -285,16 +289,19 @@ export const AdminPage: React.FC = () => {
               gap: '16px',
             }}
           >
-            <div>
-              <span style={{ fontSize: '9px', letterSpacing: '0.18em', color: 'var(--gold)', textTransform: 'uppercase' }}>
-                HOTEL MANAGEMENT CONSOLE
-              </span>
-              <h1 style={{ fontSize: '28px', margin: '4px 0 0', color: '#fff', fontFamily: 'var(--serif)' }}>
-                Roop Cliff Bhopal
-              </h1>
-              <p style={{ margin: '4px 0 0', fontSize: '11px', color: '#98ada2' }}>
-                Logged in as <strong>hotelroopcliff@gmail.com</strong>
-              </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <HotelLogo size="sm" theme="gold" showSubtitle={false} linkToHome={false} />
+              <div>
+                <span style={{ fontSize: '9px', letterSpacing: '0.18em', color: 'var(--gold)', textTransform: 'uppercase' }}>
+                  HOTEL MANAGEMENT CONSOLE
+                </span>
+                <h1 style={{ fontSize: '24px', margin: '2px 0 0', color: '#fff', fontFamily: 'var(--serif)' }}>
+                  Roop Cliff Bhopal
+                </h1>
+                <p style={{ margin: '2px 0 0', fontSize: '11px', color: '#98ada2' }}>
+                  Logged in as <strong>hotelroopcliff@gmail.com</strong>
+                </p>
+              </div>
             </div>
 
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>

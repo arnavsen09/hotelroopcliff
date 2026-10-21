@@ -1,65 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Footer } from '../components/Footer';
+import { CardTilt } from '../components/CardTilt';
 
 export const DiningPage: React.FC = () => {
   return (
     <>
       <main>
         <section className="page-hero">
-          <span className="eyebrow light">FOOD &amp; DINING</span>
+          <span className="eyebrow light">EPICUREAN EXPERIENCES</span>
           <h1>
-            A little pause
+            Pure Vegetarian
             <br />
-            in the <em>day.</em>
+            <em>Artisanal Dining.</em>
           </h1>
-          <p>Make room for a relaxed start or a simple meal during your stay.</p>
+          <p>
+            Awaken to bespoke morning breakfast spreads, authentic Malwa flavors, and round-the-clock in-room dining prepared with pure ingredients.
+          </p>
         </section>
 
         <div className="breadcrumb">
-          <Link to="/">HOME</Link>　/　DINING
+          <Link to="/">HOME</Link>　/　DINING &amp; CULINARY
         </div>
 
         <section className="content-wrap">
-          <div className="photo-strip">
-            <img
-              src="https://r1imghtlak.mmtcdn.com/78404fdd-27fd-47a7-a929-3def08deee17.jpeg?crop=480%3A336&downsize=480%3A336&downsize=520%3A350&output-format=jpg&output-quality=75"
-              alt="Roop Cliff exterior listing photo"
-            />
-            <img
-              src="https://images.trvl-media.com/lodging/123000000/122350000/122349500/122349432/66991da1.jpg?h=800&impolicy=fcrop&w=1200"
-              alt="Hotel room listing photo"
-            />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+            <CardTilt maxTilt={4} glare={true} style={{ borderRadius: '8px', overflow: 'hidden', height: '340px' }}>
+              <img
+                src="https://gos3.ibcdn.com/c3155b2b-7d32-40b8-b436-e69452890389.jpeg"
+                alt="Roop Cliff Dining Room"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </CardTilt>
+            <CardTilt maxTilt={4} glare={true} style={{ borderRadius: '8px', overflow: 'hidden', height: '340px' }}>
+              <img
+                src="https://images.trvl-media.com/lodging/123000000/122350000/122349500/122349432/66991da1.jpg?h=800&impolicy=fcrop&w=1200"
+                alt="In-suite Morning Breakfast Service"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </CardTilt>
           </div>
 
           <div className="two-col">
             <div>
-              <span className="eyebrow">ON-SITE DINING</span>
-              <h2>Simple, convenient, close at hand.</h2>
-              <p style={{ fontSize: '12px', lineHeight: 2, color: '#74796f', marginBottom: '24px' }}>
-                Public hotel listings indicate an on-site restaurant and vegetarian breakfast. Menu, service hours, breakfast inclusions and current availability should be confirmed directly with the property before publishing detailed claims.
+              <span className="eyebrow">REFINED GASTRONOMY</span>
+              <h2>Flavors of Warmth &amp; Tradition</h2>
+              <p style={{ fontSize: '13px', lineHeight: 2, color: '#4C5D54', marginBottom: '24px' }}>
+                Roop Cliff Hotel takes pride in serving pure vegetarian delicacies with a focus on fresh regional sourcing. Enjoy wholesome breakfast platters with hot filter coffee, poha-jalebi, parathas, and light continental options.
               </p>
-              <Link className="button button-dark" to="/booking">
-                Plan your stay <span>↗</span>
-              </Link>
+              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+                <Link className="button button-gold" to="/booking">
+                  Book Stay with Breakfast <span>↗</span>
+                </Link>
+                <Link className="button button-dark" to="/rooms">
+                  Explore Suites <span>↗</span>
+                </Link>
+              </div>
             </div>
 
             <div className="surface-card">
-              <h3>Before you visit</h3>
+              <span className="eyebrow">DINING INFORMATION</span>
+              <h3 style={{ fontFamily: 'var(--serif)', fontSize: '24px', margin: '8px 0 16px', color: 'var(--green-deep)' }}>
+                Gastronomy Guidelines
+              </h3>
               <div className="summary-line">
-                <span>Restaurant</span>
-                <strong>Listed on OTA</strong>
+                <span>Cuisine Concept</span>
+                <strong>100% Pure Vegetarian</strong>
               </div>
               <div className="summary-line">
-                <span>Breakfast</span>
-                <strong>Vegetarian listing</strong>
+                <span>Morning Breakfast</span>
+                <strong>7:30 AM – 10:30 AM Daily</strong>
               </div>
               <div className="summary-line">
-                <span>Menu &amp; hours</span>
-                <strong>Confirm with hotel</strong>
+                <span>In-Room Service</span>
+                <strong>Available to All Suites</strong>
               </div>
-              <p className="fine-print">
-                No unverified menu, pricing or service hours are being invented for this preview.
+              <div className="summary-line">
+                <span>Banqueting &amp; Gatherings</span>
+                <strong>Customized Menu on Request</strong>
+              </div>
+              <p className="fine-print" style={{ marginTop: '18px' }}>
+                Dietary preferences, Jain food preparations, and customized family dining packages can be arranged in advance through our guest concierge.
               </p>
             </div>
           </div>

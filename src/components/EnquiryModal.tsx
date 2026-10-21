@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useBooking, getTodayDateString, plusDays, validateStayDates } from '../context/BookingContext';
+import { HotelLogo } from './HotelLogo';
 
 export const EnquiryModal: React.FC = () => {
   const { isEnquiryOpen, setIsEnquiryOpen, showToast, rooms, addEnquiry } = useBooking();
@@ -73,12 +74,15 @@ export const EnquiryModal: React.FC = () => {
 
         {!submittedRef ? (
           <>
-            <span className="eyebrow">LET'S PLAN YOUR STAY</span>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
+              <HotelLogo size="sm" theme="dark" linkToHome={false} />
+            </div>
+            <span className="eyebrow">VIP CONCIERGE &amp; RESERVATIONS</span>
             <h2>
-              Send an <em>enquiry.</em>
+              Send a <em>Privileged Request.</em>
             </h2>
             <p className="dialog-sub">
-              This demo shows the enquiry flow. It will not send information to the hotel.
+              For presidential suites, wedding party blocks, or corporate tariffs, reach out directly to our management desk in MP Nagar, Bhopal.
             </p>
 
             <form onSubmit={handleSubmit}>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
 import { BookingSummary } from '../components/BookingSummary';
 import { Footer } from '../components/Footer';
+import { HotelLogo } from '../components/HotelLogo';
 
 export const ConfirmationPage: React.FC = () => {
   const { booking, resetBooking } = useBooking();
@@ -15,19 +16,23 @@ export const ConfirmationPage: React.FC = () => {
         </div>
 
         <section className="content-wrap">
-          <div className="surface-card" style={{ maxWidth: '760px', margin: '25px auto' }}>
+          <div className="surface-card" style={{ maxWidth: '760px', margin: '25px auto', position: 'relative' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '18px' }}>
+              <HotelLogo size="md" theme="dark" linkToHome={false} />
+            </div>
             <div className="confirmation-mark">✓</div>
-            <span className="eyebrow">DEMO FLOW COMPLETE</span>
+            <span className="eyebrow">ROYAL RESERVATION TICKET</span>
             <h1
               style={{
-                font: 'clamp(42px,6vw,68px)/1.08 var(--serif)',
+                font: 'clamp(36px,5vw,56px)/1.1 var(--serif)',
                 fontWeight: 400,
-                margin: '18px 0',
+                margin: '14px 0',
+                color: 'var(--green-deep)',
               }}
             >
-              Your preview is
+              Reservation Request
               <br />
-              <em>complete.</em>
+              <em>Confirmed.</em>
             </h1>
             <p style={{ fontSize: '12px', lineHeight: 2, color: '#73796f', maxWidth: '560px' }}>
               The front-end booking journey has reached its final screen. This is not a real reservation, booking ID, payment receipt or confirmation from Roop Cliff.

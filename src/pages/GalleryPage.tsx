@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useBooking } from '../context/BookingContext';
 import { GalleryMediaItem } from '../types';
 import { Footer } from '../components/Footer';
+import { CardTilt } from '../components/CardTilt';
+import { Room3DViewer } from '../components/Room3DViewer';
 
 export const GalleryPage: React.FC = () => {
-  const { gallery, isAdminLoggedIn } = useBooking();
-  const [activeTab, setActiveTab] = useState<'all' | 'image' | 'video' | 'rooms' | 'exterior' | 'dining'>('all');
+  const { gallery, isAdminLoggedIn, rooms, updateBooking } = useBooking();
+  const navigate = useNavigate();
+
+  const [activeTab, setActiveTab] = useState<'all' | '3d' | 'image' | 'video' | 'rooms' | 'exterior' | 'dining'>('all');
   const [selectedMedia, setSelectedMedia] = useState<GalleryMediaItem | null>(null);
 
   const filteredItems = gallery.filter((item) => {
-    if (activeTab === 'all') return true;
+    if (activeTab === 'all' || activeTab === '3d') return true;
     if (activeTab === 'image') return item.type === 'image';
     if (activeTab === 'video') return item.type === 'video';
     if (activeTab === 'rooms') return item.category === 'rooms';
@@ -19,34 +23,49 @@ export const GalleryPage: React.FC = () => {
     return true;
   });
 
+  const handleBookRoom = (roomName: string) => {
+    updateBooking({ room: roomName });
+    navigate(`/booking?room=${encodeURIComponent(roomName)}`);
+  };
+
   return (
     <>
       <main>
         <section className="page-hero">
-          <span className="eyebrow light">PHOTO &amp; VIDEO SHOWCASE</span>
+          <span className="eyebrow light">ROYAL VISUAL ARCHIVE</span>
           <h1>
-            The place, in
+            The Sanctuary in
             <br />
-            <em>pictures &amp; motion.</em>
+            <em>Pictures, Motion &amp; 3D.</em>
           </h1>
           <p>
-            Explore guest rooms, twin layouts, exterior views, and property walkthrough videos of Roop Cliff, Bhopal.
+            Immerse yourself in Roop Cliff Hotel Bhopal. Explore interactive 3D suites, video tours, architecture, and guest experiences.
           </p>
         </section>
 
         <div className="breadcrumb">
-          <Link to="/">HOME</Link>　/　GALLERY
+          <Link to="/">HOME</Link>　/　GALLERY &amp; 3D TOUR
         </div>
 
         <section className="content-wrap">
-          {/* Controls bar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px', marginBottom: '24px' }}>
+          {/* Controls Bar */}
+          <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
             <div className="gallery-tabs" style={{ marginBottom: 0 }}>
               <button
                 className={`gallery-tab-btn ${activeTab === 'all' ? 'active' : ''}`}
                 onClick={() => setActiveTab('all')}
               >
-                All ({gallery.length})
+                All Media
+              </button>
+              <button
+                className={`gallery-tab-btn ${activeTab === '3d' ? 'active' : ''}`}
+                onClick={() => setActiveTab('3d')}
+                style={{
+                  background: activeTab === '3d' ? undefined : 'rgba(212,175,55,0.12)',
+                  borderColor: 'rgba(212,175,55,0.4)',
+                }}
+              >
+                ✦ 3D Suite Tour
               </button>
               <button
                 className={`gallery-tab-btn ${activeTab === 'image' ? 'active' : ''}`}
@@ -64,7 +83,7 @@ export const GalleryPage: React.FC = () => {
                 className={`gallery-tab-btn ${activeTab === 'rooms' ? 'active' : ''}`}
                 onClick={() => setActiveTab('rooms')}
               >
-                Rooms
+                Suites
               </button>
               <button
                 className={`gallery-tab-btn ${activeTab === 'exterior' ? 'active' : ''}`}
@@ -83,15 +102,39 @@ export const GalleryPage: React.FC = () => {
             {isAdminLoggedIn && (
               <Link
                 to="/admin"
-                className="button button-dark"
-                style={{ padding: '8px 14px', minHeight: '36px', fontSize: '9px' }}
+                className="button button-gold"
+                style={{ padding: '8px 16px', minHeight: '36px', fontSize: '10px' }}
               >
-                + Manage &amp; Upload Media <span>↗</span>
+                <span>+ Upload New Photos/Videos</span> <span>↗</span>
               </Link>
             )}
           </div>
 
-          {/* Media Grid */}
+          {/* 3D Suite Tour Section */}
+          {(activeTab === '3d' || activeTab === 'all') && (
+            <div className="mb-10 p-6 rounded-2xl bg-[#091510] border border-[rgba(212,175,55,0.35)] shadow-2xl">
+              <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <div>
+                  <span className="text-[9px] uppercase tracking-widest text-[#D4AF37] font-bold block">
+                    INTERACTIVE 3D TOUR
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-serif text-white">
+                    Explore Suites in 360° Real-Time 3D
+                  </h3>
+                </div>
+                <div className="text-xs text-white/60">
+                  Drag to rotate · Click hotspots to inspect details
+                </div>
+              </div>
+
+              <Room3DViewer
+                rooms={rooms}
+                onBookRoom={handleBookRoom}
+              />
+            </div>
+          )}
+
+          {/* Photo & Video Grid */}
           <div
             style={{
               display: 'grid',
@@ -100,10 +143,12 @@ export const GalleryPage: React.FC = () => {
             }}
           >
             {filteredItems.map((item) => (
-              <div
+              <CardTilt
                 key={item.id}
+                maxTilt={7}
+                glare={true}
                 className="media-card"
-                style={{ height: '240px' }}
+                style={{ height: '250px' }}
                 onClick={() => setSelectedMedia(item)}
                 role="button"
                 tabIndex={0}
@@ -115,121 +160,93 @@ export const GalleryPage: React.FC = () => {
               >
                 {item.type === 'video' ? (
                   <>
-                    <video
-                      src={item.url}
-                      poster={item.poster || ''}
-                      preload="metadata"
-                      muted
-                      playsInline
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    <img
+                      src={item.poster || 'https://images.trvl-media.com/lodging/123000000/122350000/122349500/122349432/66991da1.jpg?h=800&impolicy=fcrop&w=1200'}
+                      alt={item.title}
+                      loading="lazy"
                     />
-                    <div className="video-play-icon">▶</div>
-                    <span className="media-badge">🎥 Video</span>
+                    <div className="media-play-overlay">
+                      <div className="play-button-icon">▶</div>
+                    </div>
                   </>
                 ) : (
-                  <>
-                    <img src={item.url} alt={item.title} loading="lazy" />
-                    <span className="media-badge">📷 Photo</span>
-                  </>
+                  <img src={item.url} alt={item.title} loading="lazy" />
                 )}
-
-                <div className="media-overlay">
-                  <div>
-                    <span style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.85, display: 'block' }}>
-                      {item.category}
-                    </span>
-                    <h3 className="media-title">{item.title}</h3>
-                    {item.caption && (
-                      <p style={{ fontSize: '10px', margin: '4px 0 0', opacity: 0.8, lineHeight: 1.4 }}>
-                        {item.caption}
-                      </p>
-                    )}
-                  </div>
+                <div className="media-card-info">
+                  <h4>{item.title}</h4>
+                  <span className="media-type-badge">{item.type}</span>
                 </div>
-              </div>
+              </CardTilt>
             ))}
           </div>
-
-          {filteredItems.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--cream)', borderRadius: '6px' }}>
-              <h3>No media items in this category.</h3>
-              <p style={{ fontSize: '11px', color: 'var(--muted)' }}>
-                Select another filter or add items via the management panel.
-              </p>
-            </div>
-          )}
-
-          <p className="fine-print" style={{ marginTop: '35px' }}>
-            Media managed via the Roop Cliff Management Portal. To upload property photography or video walkthroughs, authenticate into the Staff Portal.
-          </p>
         </section>
 
-        {/* Lightbox / Video Modal */}
+        {/* Media Lightbox / Video Modal */}
         {selectedMedia && (
-          <div className="modal-backdrop" onClick={() => setSelectedMedia(null)}>
+          <div
+            className="dialog-backdrop"
+            onClick={() => setSelectedMedia(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedMedia.title}
+          >
             <div
-              style={{
-                position: 'relative',
-                maxWidth: '900px',
-                width: '100%',
-                maxHeight: '90vh',
-                background: 'var(--green-deep)',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                color: '#fff',
-                boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
-              }}
+              className="media-modal-card"
               onClick={(e) => e.stopPropagation()}
+              style={{
+                maxWidth: '900px',
+                width: '94%',
+                background: 'var(--green-deep)',
+                color: '#fff',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                border: '1px solid var(--gold)',
+                position: 'relative',
+              }}
             >
               <button
                 className="dialog-close"
-                style={{ color: '#fff', zIndex: 10, background: 'rgba(0,0,0,0.4)', borderRadius: '50%', width: '36px', height: '36px', display: 'grid', placeItems: 'center' }}
+                style={{ color: '#fff', zIndex: 10 }}
                 onClick={() => setSelectedMedia(null)}
                 aria-label="Close modal"
               >
-                ×
+                &times;
               </button>
 
-              <div style={{ background: '#000', maxHeight: '68vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ position: 'relative', background: '#000', maxHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {selectedMedia.type === 'video' ? (
                   <video
                     src={selectedMedia.url}
+                    poster={selectedMedia.poster}
                     controls
                     autoPlay
-                    playsInline
-                    style={{ maxHeight: '68vh', width: '100%', outline: 'none' }}
+                    style={{ width: '100%', maxHeight: '65vh', objectFit: 'contain' }}
                   />
                 ) : (
                   <img
                     src={selectedMedia.url}
                     alt={selectedMedia.title}
-                    style={{ maxHeight: '68vh', maxWidth: '100%', objectFit: 'contain' }}
+                    style={{ width: '100%', maxHeight: '65vh', objectFit: 'contain' }}
                   />
                 )}
               </div>
 
-              <div style={{ padding: '20px 24px', background: 'var(--green-deep)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
-                  <div>
-                    <span style={{ fontSize: '9px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)' }}>
-                      {selectedMedia.type.toUpperCase()} · {selectedMedia.category.toUpperCase()}
-                    </span>
-                    <h2 style={{ fontSize: '20px', margin: '4px 0 6px', color: '#fff', fontFamily: 'var(--serif)' }}>
-                      {selectedMedia.title}
-                    </h2>
-                    <p style={{ fontSize: '11px', margin: 0, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6 }}>
+              <div style={{ padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <h3 style={{ margin: 0, fontFamily: 'var(--serif)', fontSize: '24px', color: 'var(--gold-light)' }}>
+                    {selectedMedia.title}
+                  </h3>
+                  {selectedMedia.caption && (
+                    <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#B3C7BD' }}>
                       {selectedMedia.caption}
                     </p>
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <Link
-                      to="/booking"
-                      className="button button-light"
-                      style={{ padding: '8px 16px', minHeight: '38px', fontSize: '10px' }}
-                    >
-                      Book a stay <span>↗</span>
-                    </Link>
-                  </div>
+                  )}
+                </div>
+
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <Link to="/booking" className="button button-gold" style={{ padding: '8px 18px', fontSize: '10px' }}>
+                    Reserve Suite <span>↗</span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -237,7 +254,7 @@ export const GalleryPage: React.FC = () => {
         )}
       </main>
 
-      <Footer />
+      <Footer variant="site" />
     </>
   );
 };
