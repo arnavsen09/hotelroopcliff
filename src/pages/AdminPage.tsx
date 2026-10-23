@@ -4,6 +4,7 @@ import { useBooking, formatCurrency } from '../context/BookingContext';
 import { Room, GalleryMediaItem, CustomerEnquiry } from '../types';
 import { Footer } from '../components/Footer';
 import { HotelLogo } from '../components/HotelLogo';
+import { ImageUploader } from '../components/ImageUploader';
 
 export const AdminPage: React.FC = () => {
   const {
@@ -936,6 +937,73 @@ export const AdminPage: React.FC = () => {
                   </button>
                 </form>
               </div>
+
+              {/* GITHUB REPOSITORY SYNC FOR IMAGE STORAGE */}
+              <div className="surface-card" style={{ marginTop: '24px' }}>
+                <span className="eyebrow">PHOTO STORAGE &amp; GITHUB SYNC</span>
+                <h3>GitHub Media Repository Integration</h3>
+                <p style={{ fontSize: '11px', color: 'var(--muted)', margin: '4px 0 16px' }}>
+                  When uploading photos for Rooms or Gallery, they are stored immediately in the website. You can also connect your GitHub repository (<code>arnavsen09/hotelroopcliff</code>) to automatically commit uploaded photos directly into <code>public/uploads/</code>!
+                </p>
+
+                <div className="field-grid">
+                  <label className="form-field">
+                    GITHUB REPOSITORY
+                    <input
+                      type="text"
+                      value={paymentSettings.githubRepo || 'arnavsen09/hotelroopcliff'}
+                      onChange={(e) => updatePaymentSettings({ githubRepo: e.target.value })}
+                      placeholder="arnavsen09/hotelroopcliff"
+                    />
+                  </label>
+                  <label className="form-field">
+                    TARGET BRANCH
+                    <input
+                      type="text"
+                      value={paymentSettings.githubBranch || 'main'}
+                      onChange={(e) => updatePaymentSettings({ githubBranch: e.target.value })}
+                      placeholder="main"
+                    />
+                  </label>
+                </div>
+
+                <label className="form-field">
+                  GITHUB PERSONAL ACCESS TOKEN (PAT) (OPTIONAL)
+                  <input
+                    type="password"
+                    value={paymentSettings.githubToken || ''}
+                    onChange={(e) => updatePaymentSettings({ githubToken: e.target.value })}
+                    placeholder="ghp_••••••••••••••••••••••••••••••••••••"
+                  />
+                </label>
+
+                <div
+                  style={{
+                    background: '#FAF8F5',
+                    border: '1px solid var(--line)',
+                    padding: '12px 14px',
+                    borderRadius: '4px',
+                    marginBottom: '16px',
+                    fontSize: '10px',
+                    color: '#2D4238',
+                    lineHeight: 1.6,
+                  }}
+                >
+                  <strong>How Photo Uploads Work:</strong>
+                  <ul style={{ margin: '4px 0 0', paddingLeft: '16px' }}>
+                    <li><strong>Direct Upload</strong>: Drag-and-drop or select any photo from your phone or PC. It is instantly optimized and stored in your browser's persistent storage to display on the live site.</li>
+                    <li><strong>GitHub Storage</strong>: With a GitHub Token added above (requires <code>repo</code> write permission), every uploaded photo will also be committed directly to your GitHub repo in <code>public/uploads/</code>!</li>
+                  </ul>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => showToast('GitHub repository settings updated.')}
+                  className="button button-gold"
+                >
+                  Save GitHub Sync Settings <span>↗</span>
+                </button>
+              </div>
             </div>
           )}
         </section>
@@ -1036,14 +1104,13 @@ export const AdminPage: React.FC = () => {
                   </label>
                 </div>
 
-                <label className="form-field">
-                  COVER PHOTO URL
-                  <input
-                    required
-                    value={editingRoom.img}
-                    onChange={(e) => setEditingRoom({ ...editingRoom, img: e.target.value })}
+                <div style={{ marginBottom: '16px' }}>
+                  <ImageUploader
+                    currentUrl={editingRoom.img}
+                    onImageSelected={(url) => setEditingRoom({ ...editingRoom, img: url })}
+                    label="Suite / Room Photograph (Direct Upload)"
                   />
-                </label>
+                </div>
 
                 <label className="form-field">
                   DESCRIPTION
@@ -1140,14 +1207,13 @@ export const AdminPage: React.FC = () => {
                   </label>
                 </div>
 
-                <label className="form-field">
-                  IMAGE URL
-                  <input
-                    required
-                    value={newRoomData.img}
-                    onChange={(e) => setNewRoomData({ ...newRoomData, img: e.target.value })}
+                <div style={{ marginBottom: '16px' }}>
+                  <ImageUploader
+                    currentUrl={newRoomData.img}
+                    onImageSelected={(url) => setNewRoomData({ ...newRoomData, img: url })}
+                    label="Suite / Room Photograph (Direct Upload)"
                   />
-                </label>
+                </div>
 
                 <label className="form-field">
                   DESCRIPTION
@@ -1217,25 +1283,35 @@ export const AdminPage: React.FC = () => {
                   </select>
                 </label>
 
-                <label className="form-field">
-                  MEDIA URL (IMAGE OR VIDEO MP4)
-                  <input
-                    required
-                    placeholder="https://..."
-                    value={newMediaData.url}
-                    onChange={(e) => setNewMediaData({ ...newMediaData, url: e.target.value })}
-                  />
-                </label>
-
-                {newMediaData.type === 'video' && (
-                  <label className="form-field">
-                    VIDEO POSTER / THUMBNAIL URL (OPTIONAL)
-                    <input
-                      placeholder="https://... poster image"
-                      value={newMediaData.poster}
-                      onChange={(e) => setNewMediaData({ ...newMediaData, poster: e.target.value })}
+                {newMediaData.type === 'image' ? (
+                  <div style={{ marginBottom: '16px' }}>
+                    <ImageUploader
+                      currentUrl={newMediaData.url}
+                      onImageSelected={(url) => setNewMediaData({ ...newMediaData, url })}
+                      label="Upload Photograph (Direct File / Drag & Drop)"
                     />
-                  </label>
+                  </div>
+                ) : (
+                  <>
+                    <label className="form-field">
+                      VIDEO URL (.MP4)
+                      <input
+                        required
+                        placeholder="https://...mp4"
+                        value={newMediaData.url}
+                        onChange={(e) => setNewMediaData({ ...newMediaData, url: e.target.value })}
+                      />
+                    </label>
+
+                    <label className="form-field">
+                      VIDEO POSTER / THUMBNAIL (OPTIONAL)
+                      <input
+                        placeholder="https://... poster image"
+                        value={newMediaData.poster}
+                        onChange={(e) => setNewMediaData({ ...newMediaData, poster: e.target.value })}
+                      />
+                    </label>
+                  </>
                 )}
 
                 <label className="form-field">

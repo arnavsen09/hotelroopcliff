@@ -4,17 +4,16 @@ import { useBooking } from '../context/BookingContext';
 import { GalleryMediaItem } from '../types';
 import { Footer } from '../components/Footer';
 import { CardTilt } from '../components/CardTilt';
-import { Room3DViewer } from '../components/Room3DViewer';
 
 export const GalleryPage: React.FC = () => {
   const { gallery, isAdminLoggedIn, rooms, updateBooking } = useBooking();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState<'all' | '3d' | 'image' | 'video' | 'rooms' | 'exterior' | 'dining'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'image' | 'video' | 'rooms' | 'exterior' | 'dining'>('all');
   const [selectedMedia, setSelectedMedia] = useState<GalleryMediaItem | null>(null);
 
   const filteredItems = gallery.filter((item) => {
-    if (activeTab === 'all' || activeTab === '3d') return true;
+    if (activeTab === 'all') return true;
     if (activeTab === 'image') return item.type === 'image';
     if (activeTab === 'video') return item.type === 'video';
     if (activeTab === 'rooms') return item.category === 'rooms';
@@ -32,19 +31,19 @@ export const GalleryPage: React.FC = () => {
     <>
       <main>
         <section className="page-hero">
-          <span className="eyebrow light">ROYAL VISUAL ARCHIVE</span>
+          <span className="eyebrow light">HOTEL VISUAL ARCHIVE</span>
           <h1>
             The Sanctuary in
             <br />
-            <em>Pictures, Motion &amp; 3D.</em>
+            <em>Pictures &amp; Motion.</em>
           </h1>
           <p>
-            Immerse yourself in Roop Cliff Hotel Bhopal. Explore interactive 3D suites, video tours, architecture, and guest experiences.
+            Immerse yourself in Roop Cliff Hotel Bhopal. Explore authentic suites, architecture, dining, and hospitality experiences in MP Nagar.
           </p>
         </section>
 
         <div className="breadcrumb">
-          <Link to="/">HOME</Link>　/　GALLERY &amp; 3D TOUR
+          <Link to="/">HOME</Link>　/　GALLERY
         </div>
 
         <section className="content-wrap">
@@ -56,16 +55,6 @@ export const GalleryPage: React.FC = () => {
                 onClick={() => setActiveTab('all')}
               >
                 All Media
-              </button>
-              <button
-                className={`gallery-tab-btn ${activeTab === '3d' ? 'active' : ''}`}
-                onClick={() => setActiveTab('3d')}
-                style={{
-                  background: activeTab === '3d' ? undefined : 'rgba(212,175,55,0.12)',
-                  borderColor: 'rgba(212,175,55,0.4)',
-                }}
-              >
-                ✦ 3D Suite Tour
               </button>
               <button
                 className={`gallery-tab-btn ${activeTab === 'image' ? 'active' : ''}`}
@@ -109,30 +98,6 @@ export const GalleryPage: React.FC = () => {
               </Link>
             )}
           </div>
-
-          {/* 3D Suite Tour Section */}
-          {(activeTab === '3d' || activeTab === 'all') && (
-            <div className="mb-10 p-6 rounded-2xl bg-[#091510] border border-[rgba(212,175,55,0.35)] shadow-2xl">
-              <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
-                <div>
-                  <span className="text-[9px] uppercase tracking-widest text-[#D4AF37] font-bold block">
-                    INTERACTIVE 3D TOUR
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-serif text-white">
-                    Explore Suites in 360° Real-Time 3D
-                  </h3>
-                </div>
-                <div className="text-xs text-white/60">
-                  Drag to rotate · Click hotspots to inspect details
-                </div>
-              </div>
-
-              <Room3DViewer
-                rooms={rooms}
-                onBookRoom={handleBookRoom}
-              />
-            </div>
-          )}
 
           {/* Photo & Video Grid */}
           <div

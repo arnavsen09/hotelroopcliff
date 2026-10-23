@@ -9,9 +9,7 @@ import {
   calculateNights,
 } from '../context/BookingContext';
 import { Footer } from '../components/Footer';
-import { ThreeCanvas } from '../components/ThreeCanvas';
 import { CardTilt } from '../components/CardTilt';
-import { Room3DViewer } from '../components/Room3DViewer';
 import { HotelLogo } from '../components/HotelLogo';
 
 export const HomePage: React.FC = () => {
@@ -22,7 +20,6 @@ export const HomePage: React.FC = () => {
   const [searchCheckout, setSearchCheckout] = useState(booking.checkout || plusDays(getTodayDateString(), 2));
   const [searchGuests, setSearchGuests] = useState(booking.guests || '2');
   const [searchRoomType, setSearchRoomType] = useState(booking.room || (rooms[0] && rooms[0].name) || 'Deluxe Room');
-  const [selected3DRoom, setSelected3DRoom] = useState<string>(rooms[0]?.name || 'Deluxe Room');
 
   const nights = calculateNights(searchCheckin, searchCheckout);
 
@@ -53,25 +50,22 @@ export const HomePage: React.FC = () => {
     <>
       <main>
         {/* =========================================================================
-            HERO SECTION: 3D EMBEDDED REALM, STARDUST PARTICLES & ROYAL CREST
+            HERO SECTION: IMMERSIVE SUITE INTERIOR & BRAND IDENTITY
         ========================================================================= */}
         <section className="hero">
-          {/* Three.js 3D Gyroscope with Embossed Gold Royal Medallion */}
-          <ThreeCanvas />
-
-          <div className="hero-image" role="img" aria-label="Roop Cliff Hotel Luxury Interior Lounge" />
+          <div className="hero-image" role="img" aria-label="Roop Cliff Hotel Luxury Suite Interior" />
           <div className="hero-shade" />
 
           <div className="hero-content">
-            {/* Royal Gold Filigree Header Crest Badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[rgba(13,30,24,0.7)] backdrop-blur-xl border border-[rgba(212,175,55,0.45)] mb-4 shadow-xl">
+            {/* Header Crest Badge */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[rgba(13,30,24,0.8)] backdrop-blur-xl border border-[rgba(212,175,55,0.45)] mb-4 shadow-xl">
               <img
-                src="/favicon.svg"
-                alt="Roop Cliff Crown"
-                className="w-5 h-5 drop-shadow"
+                src="/logo-gold.png"
+                alt="Roop Cliff Crest"
+                style={{ height: '18px', width: 'auto', objectFit: 'contain' }}
               />
-              <span className="text-[9px] tracking-[0.26em] uppercase font-bold text-[#F2E3B5]">
-                ESTABLISHED IN ZONE-I · BHOPAL
+              <span className="text-[9px] tracking-[0.24em] uppercase font-bold text-[#F2E3B5]">
+                ZONE-I · MP NAGAR · BHOPAL
               </span>
             </div>
 
@@ -82,7 +76,7 @@ export const HomePage: React.FC = () => {
             </h1>
 
             <p className="hero-copy">
-              Welcome to Roop Cliff Hotel — where timeless Indian heritage meets contemporary 5-star hospitality. Discover bespoke suites, quiet architectural comfort, and refined culinary indulgences in MP Nagar.
+              Welcome to Roop Cliff Hotel — where timeless Indian heritage meets contemporary hospitality. Discover bespoke suites, quiet architectural comfort, and refined culinary indulgences in MP Nagar.
             </p>
 
             <div className="flex gap-4 flex-wrap items-center mt-6">
@@ -90,69 +84,103 @@ export const HomePage: React.FC = () => {
                 <span>Explore Signature Suites</span>
                 <span>↗</span>
               </Link>
-              <a
+              <button
+                type="button"
                 className="button button-dark"
-                href="#virtual-tour"
                 style={{
                   background: 'rgba(13, 30, 24, 0.75)',
                   backdropFilter: 'blur(16px)',
                   border: '1px solid rgba(212, 175, 55, 0.45)',
                 }}
-              >
-                <span>3D Virtual Tour</span>
-                <span>▼</span>
-              </a>
-              <button
-                type="button"
-                className="button"
-                style={{
-                  background: 'transparent',
-                  color: 'var(--gold-light)',
-                  border: '1px solid rgba(212, 175, 55, 0.35)',
-                  backdropFilter: 'blur(10px)',
-                  fontSize: '10px',
-                }}
                 onClick={() => setIsEnquiryOpen(true)}
               >
-                <span>VIP Concierge</span>
-                <span>✦</span>
+                <span>Direct Inquiry</span>
+                <span>↗</span>
               </button>
             </div>
-          </div>
-
-          <div className="hero-note">
-            <span className="note-line" />
-            <span>
-              ROOP CLIFF HOTEL · BHOPAL
-              <br />
-              <small style={{ color: 'var(--gold)', letterSpacing: '0.15em' }}>
-                ZONE-I MAHARANA PRATAP NAGAR
-              </small>
-            </span>
-          </div>
-
-          <div className="hero-index">
-            ROOP CLIFF <span>/</span> 5-STAR LUXURY
           </div>
         </section>
 
         {/* =========================================================================
-            FLOATING GLASSMORPHIC RESERVATION CONSOLE
+            CLEAN, PROPERLY ALIGNED RESERVATION CONSOLE
         ========================================================================= */}
-        <section className="booking-wrap" id="booking">
-          <form id="availabilityForm" className="booking-bar" onSubmit={handleAvailabilitySubmit}>
-            <div className="booking-intro">
-              <span className="eyebrow" style={{ color: 'var(--gold-dark)', fontSize: '8.5px' }}>
-                DIRECT RESERVATION
+        <section className="booking-wrap" id="booking" style={{ position: 'relative', zIndex: 25, marginTop: '-42px' }}>
+          <form
+            id="availabilityForm"
+            onSubmit={handleAvailabilitySubmit}
+            style={{
+              maxWidth: '1240px',
+              margin: '0 auto',
+              background: '#FFFFFF',
+              borderRadius: '8px',
+              border: '1px solid rgba(212, 175, 55, 0.35)',
+              boxShadow: '0 20px 50px rgba(13, 30, 24, 0.12)',
+              padding: '24px 28px',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr)) auto',
+              gap: '20px',
+              alignItems: 'end',
+            }}
+          >
+            {/* Direct Reservation Header Strip */}
+            <div
+              style={{
+                gridColumn: '1 / -1',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '8px',
+                paddingBottom: '12px',
+                borderBottom: '1px solid rgba(20, 46, 37, 0.08)',
+              }}
+            >
+              <div>
+                <span
+                  style={{
+                    fontSize: '9px',
+                    letterSpacing: '0.22em',
+                    fontWeight: 700,
+                    color: '#AA8222',
+                    textTransform: 'uppercase',
+                    display: 'block',
+                    fontFamily: 'Cinzel, serif',
+                  }}
+                >
+                  DIRECT RESERVATION
+                </span>
+                <strong
+                  style={{
+                    fontFamily: 'Cormorant Garamond, Georgia, serif',
+                    fontSize: '22px',
+                    color: '#142E25',
+                    fontWeight: 600,
+                  }}
+                >
+                  Reserve Your Stay
+                </strong>
+              </div>
+              <span style={{ fontSize: '11px', color: '#64756D' }}>
+                {nights} {nights === 1 ? 'Night' : 'Nights'} · Best direct rate guarantee with complimentary Wi-Fi
               </span>
-              <strong>Reserve Your Stay</strong>
-              <small style={{ fontSize: '9px', color: 'var(--muted)', display: 'block', marginTop: '2px' }}>
-                {nights} {nights === 1 ? 'Night' : 'Nights'} · Best rate guarantee with complimentary Wi-Fi
-              </small>
             </div>
 
-            <label className="booking-field">
-              <span>CHECK-IN DATE</span>
+            {/* Check-in */}
+            <div>
+              <span
+                style={{
+                  fontSize: '8.5px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  color: '#AA8222',
+                  textTransform: 'uppercase',
+                  display: 'block',
+                  marginBottom: '6px',
+                  fontFamily: 'Cinzel, serif',
+                }}
+              >
+                CHECK-IN DATE
+              </span>
               <input
                 id="checkin"
                 type="date"
@@ -166,11 +194,36 @@ export const HomePage: React.FC = () => {
                     setSearchCheckout(plusDays(val, 1));
                   }
                 }}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid rgba(20, 46, 37, 0.18)',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                  color: '#142E25',
+                  backgroundColor: '#FAF8F5',
+                  outline: 'none',
+                  fontWeight: 500,
+                }}
               />
-            </label>
+            </div>
 
-            <label className="booking-field">
-              <span>CHECK-OUT DATE</span>
+            {/* Check-out */}
+            <div>
+              <span
+                style={{
+                  fontSize: '8.5px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  color: '#AA8222',
+                  textTransform: 'uppercase',
+                  display: 'block',
+                  marginBottom: '6px',
+                  fontFamily: 'Cinzel, serif',
+                }}
+              >
+                CHECK-OUT DATE
+              </span>
               <input
                 id="checkout"
                 type="date"
@@ -178,15 +231,51 @@ export const HomePage: React.FC = () => {
                 required
                 value={searchCheckout}
                 onChange={(e) => setSearchCheckout(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid rgba(20, 46, 37, 0.18)',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                  color: '#142E25',
+                  backgroundColor: '#FAF8F5',
+                  outline: 'none',
+                  fontWeight: 500,
+                }}
               />
-            </label>
+            </div>
 
-            <label className="booking-field">
-              <span>GUESTS</span>
+            {/* Guests */}
+            <div>
+              <span
+                style={{
+                  fontSize: '8.5px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  color: '#AA8222',
+                  textTransform: 'uppercase',
+                  display: 'block',
+                  marginBottom: '6px',
+                  fontFamily: 'Cinzel, serif',
+                }}
+              >
+                GUESTS
+              </span>
               <select
                 id="guests"
                 value={searchGuests}
                 onChange={(e) => setSearchGuests(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid rgba(20, 46, 37, 0.18)',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                  color: '#142E25',
+                  backgroundColor: '#FAF8F5',
+                  outline: 'none',
+                  fontWeight: 500,
+                }}
               >
                 <option value="1">1 Guest · Solo Traveler</option>
                 <option value="2">2 Guests · Couple / Deluxe</option>
@@ -194,13 +283,38 @@ export const HomePage: React.FC = () => {
                 <option value="4">4 Guests · Family Suite</option>
                 <option value="5">5+ Guests · Multi-Suite</option>
               </select>
-            </label>
+            </div>
 
-            <label className="booking-field">
-              <span>SUITE TYPE</span>
+            {/* Room Category */}
+            <div>
+              <span
+                style={{
+                  fontSize: '8.5px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  color: '#AA8222',
+                  textTransform: 'uppercase',
+                  display: 'block',
+                  marginBottom: '6px',
+                  fontFamily: 'Cinzel, serif',
+                }}
+              >
+                SUITE CATEGORY
+              </span>
               <select
                 value={searchRoomType}
                 onChange={(e) => setSearchRoomType(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid rgba(20, 46, 37, 0.18)',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                  color: '#142E25',
+                  backgroundColor: '#FAF8F5',
+                  outline: 'none',
+                  fontWeight: 500,
+                }}
               >
                 {rooms.map((r) => (
                   <option key={r.id || r.name} value={r.name}>
@@ -208,118 +322,124 @@ export const HomePage: React.FC = () => {
                   </option>
                 ))}
               </select>
-            </label>
+            </div>
 
-            <button className="button button-gold" type="submit" style={{ whiteSpace: 'nowrap' }}>
-              Check Tariffs <span>↗</span>
-            </button>
+            {/* Check Tariffs Button */}
+            <div>
+              <button
+                className="button button-gold"
+                type="submit"
+                style={{
+                  width: '100%',
+                  minHeight: '42px',
+                  padding: '10px 24px',
+                  fontSize: '11px',
+                  letterSpacing: '0.12em',
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                }}
+              >
+                <span>CHECK TARIFFS</span> <span>↗</span>
+              </button>
+            </div>
           </form>
 
-          <p className="demo-note">
+          <p className="demo-note" style={{ maxWidth: '1240px', margin: '10px auto 0' }}>
             <span className="dot" /> Real-time direct booking channel · Managed live through the hotel management portal
           </p>
         </section>
 
         {/* =========================================================================
-            SECTION 01: THE HERITAGE & SANCTUARY
+            PROMINENT ARCHITECTURAL SHOWCASE: ONE IMAGE (THE LAST ONE: HOTEL FAÇADE)
         ========================================================================= */}
-        <section className="intro-section section-pad" id="stay">
-          <div className="intro-label">
-            <span className="eyebrow">01 / THE SANCTUARY</span>
-            <span className="vertical-rule" />
-            <span className="muted">TIMELESS HOSPITALITY</span>
-          </div>
-
-          <div className="intro-main">
-            <h2>
-              Where Every Arrival
-              <br />
-              Feels Like <em>Coming Home.</em>
-            </h2>
-            <div className="intro-bottom">
-              <p>
-                Nestled within the commercial epicenter of Maharana Pratap Nagar, Roop Cliff provides an acoustic haven from the city’s pulse. Designed with meticulous attention to soundproofing, plush custom furnishings, and authentic Madhya Pradesh warmth.
+        <section className="suite-showcase-hero relative overflow-hidden" id="showcase" style={{ background: '#0D1E18', padding: '64px 0 72px' }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Editorial Kicker */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-[#D4AF37]/25 gap-4">
+              <div>
+                <span className="text-[10px] tracking-[0.28em] uppercase font-bold text-[#D4AF37] block mb-2" style={{ fontFamily: 'Cinzel, Georgia, serif' }}>
+                  BOUTIQUE ARCHITECTURE · ZONE-I MP NAGAR
+                </span>
+                <h2 className="text-3xl sm:text-5xl font-serif text-[#FAF8F5] tracking-tight leading-tight m-0">
+                  A Considered Sanctuary <br />
+                  <em className="italic text-[#ECC870]">Crafted for Stillness.</em>
+                </h2>
+              </div>
+              <p className="text-sm text-[#A8BCB1] max-w-md font-light leading-relaxed m-0">
+                Immerse yourself in our premier accommodation. Central location, acoustic isolation, and tailored hospitality in the heart of MP Nagar, Bhopal.
               </p>
-              <div style={{ display: 'flex', gap: '24px', margin: '24px 0', borderTop: '1px solid var(--line)', paddingTop: '18px' }}>
+            </div>
+
+            {/* Single Prominent Architectural Image */}
+            <div
+              className="relative overflow-hidden rounded-md shadow-2xl"
+              style={{
+                height: '420px',
+                maxHeight: '450px',
+                width: '100%',
+                position: 'relative',
+                borderRadius: '6px',
+                border: '1px solid rgba(212, 175, 55, 0.35)',
+              }}
+            >
+              <img
+                src="/hotel img.jpeg"
+                alt="Hotel Roop Cliff Boutique Architecture at Twilight in MP Nagar Bhopal"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(13,30,24,0.1) 0%, rgba(13,30,24,0.3) 60%, rgba(13,30,24,0.85) 100%)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '24px',
+                  left: '24px',
+                  right: '24px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  color: '#FFFFFF',
+                }}
+              >
                 <div>
-                  <strong style={{ fontSize: '24px', fontFamily: 'var(--serif)', color: 'var(--gold-dark)', display: 'block' }}>
-                    4.8 ★
-                  </strong>
-                  <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Guest Review Rating</span>
+                  <span style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: '#ECC870', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                    ZONE-I · MAHARANA PRATAP NAGAR · BHOPAL
+                  </span>
+                  <h3 style={{ fontSize: '24px', fontFamily: 'Cormorant Garamond, Georgia, serif', margin: 0, color: '#FAF8F5' }}>
+                    Hotel Roop Cliff
+                  </h3>
                 </div>
-                <div style={{ borderLeft: '1px solid var(--line)', paddingLeft: '24px' }}>
-                  <strong style={{ fontSize: '24px', fontFamily: 'var(--serif)', color: 'var(--green-deep)', display: 'block' }}>
-                    Zone-I
-                  </strong>
-                  <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Central Prime MP Nagar</span>
-                </div>
-                <div style={{ borderLeft: '1px solid var(--line)', paddingLeft: '24px' }}>
-                  <strong style={{ fontSize: '24px', fontFamily: 'var(--serif)', color: 'var(--green-deep)', display: 'block' }}>
-                    100%
-                  </strong>
-                  <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Pure Vegetarian Dining</span>
-                </div>
-              </div>
-
-              <div className="flex gap-4 items-center">
-                <Link className="text-link" to="/dining">
-                  Discover Culinary &amp; Concierge <span>↗</span>
-                </Link>
-                <Link className="text-link" to="/location" style={{ borderColor: 'var(--green-deep)' }}>
-                  Transit &amp; Distance Map <span>↗</span>
+                <Link
+                  to="/rooms"
+                  className="button button-gold"
+                  style={{ whiteSpace: 'nowrap', fontSize: '10px', padding: '10px 20px' }}
+                >
+                  <span>Explore Rooms</span>
+                  <span>↗</span>
                 </Link>
               </div>
             </div>
           </div>
-
-          <CardTilt maxTilt={6} glare={true} className="intro-photo">
-            <img
-              src="https://images.trvl-media.com/lodging/123000000/122350000/122349500/122349432/66991da1.jpg?h=800&impolicy=fcrop&w=1200"
-              alt="Roop Cliff Luxury Suite Interior"
-              loading="lazy"
-            />
-            <span className="photo-caption">REFINED TRANQUILITY · SUITE 01</span>
-          </CardTilt>
         </section>
 
         {/* =========================================================================
-            NEW FEATURE: 3D INTERACTIVE VIRTUAL SUITE EXPLORER (THREE.JS)
+            SECTION 02: SIGNATURE ROOMS & SUITES WITH AUTHENTIC PHOTOGRAPHY
         ========================================================================= */}
-        <section className="section-pad bg-[#0B1812] text-white relative overflow-hidden" id="virtual-tour">
-          {/* Subtle Ambient Gold Gradient */}
-          <div className="absolute inset-0 bg-radial-gradient from-[rgba(212,175,55,0.08)] via-transparent to-transparent pointer-events-none" />
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(212,175,55,0.15)] border border-[rgba(212,175,55,0.3)] text-[#D4AF37] text-[9px] uppercase tracking-widest font-semibold mb-3">
-                <span>✦</span>
-                <span>REAL-TIME 3D ARCHITECTURAL TOUR</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-white mb-4">
-                Step Inside <em>The Grandeur.</em>
-              </h2>
-              <p className="text-white/70 text-sm md:text-base font-light">
-                Explore our signature suites in interactive 3D. Inspect luxury furnishings, toggle day &amp; night ambiance, and experience the refined acoustics before booking.
-              </p>
-            </div>
-
-            {/* Three.js 3D Interactive Room Model */}
-            <Room3DViewer
-              rooms={rooms}
-              selectedRoomName={selected3DRoom}
-              onSelectRoom={(name) => setSelected3DRoom(name)}
-              onBookRoom={(name) => handleRoomClick(name)}
-            />
-          </div>
-        </section>
-
-        {/* =========================================================================
-            SECTION 02: SIGNATURE ROOMS & SUITES WITH 3D TILT CARDS
-        ========================================================================= */}
-        <section className="rooms-section section-pad" id="rooms">
+        <section className="rooms-section section-pad bg-white" id="rooms">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">02 / SIGNATURE SUITES</span>
+              <span className="eyebrow">02 / ALL CATEGORIES</span>
               <h2>
                 Curated Spaces for
                 <br />
@@ -357,23 +477,27 @@ export const HomePage: React.FC = () => {
                 <div className="room-meta">
                   <div>
                     <h3>{room.name}</h3>
-                    <p>{room.desc}</p>
+                    <p>{room.subtitle || room.desc}</p>
                   </div>
                   <span className="room-arrow">↗</span>
                 </div>
 
                 <div className="room-price">
                   <div>
-                    <span className="price-label">ROOM ONLY TARIFF</span>
+                    <span className="price-label">ROOM TARIFF</span>
                     <strong>
-                      {formatCurrency(room.rate)}
+                      {room.rateOnRequest ? (
+                        <span>On Request / {formatCurrency(room.rate)}</span>
+                      ) : (
+                        formatCurrency(room.rate)
+                      )}
                       <small> / night</small>
                     </strong>
                     <span className="price-tax">+ {formatCurrency(room.tax)} taxes &amp; fees</span>
                   </div>
 
                   <div className="breakfast-rate">
-                    <span>With Royal Breakfast</span>
+                    <span>With Breakfast</span>
                     <strong>
                       {formatCurrency(room.breakfast)}
                       <small> / night</small>
@@ -396,25 +520,25 @@ export const HomePage: React.FC = () => {
                     updateBooking({ room: room.name });
                   }}
                 >
-                  Reserve Suite <span>↗</span>
+                  {room.name === 'Cliff Suite' ? 'Request This Room' : 'Reserve Suite'} <span>↗</span>
                 </Link>
               </CardTilt>
             ))}
           </div>
 
           <p className="fine-print">
-            Rates reflect current tariff listings for Roop Cliff Hotel, Bhopal. Breakfast inclusions, extra-bed configurations, and banquet requirements can be customized during booking or directly with the management.
+            Rates reflect current verified direct tariff listings for Roop Cliff Hotel, Bhopal. Custom corporate bookings and banquet requirements can be tailored directly with hotel management.
           </p>
         </section>
 
         {/* =========================================================================
-            SECTION 03: LUXURY AMENITIES & EXPERIENCES (GLASSMORPHIC BENTO)
+            SECTION 03: LUXURY AMENITIES & EXPERIENCES
         ========================================================================= */}
         <section className="experience-section" id="experience">
           <div className="experience-photo">
             <img
-              src="https://gos3.ibcdn.com/c3155b2b-7d32-40b8-b436-e69452890389.jpeg"
-              alt="Roop Cliff Hotel Fine Dining Lounge"
+              src="/staff.jpeg"
+              alt="Roop Cliff Hotel Hospitality & Executive Chef Team"
               loading="lazy"
             />
           </div>
@@ -454,14 +578,14 @@ export const HomePage: React.FC = () => {
                 View Dining Inclusions <span>↗</span>
               </Link>
               <Link to="/gallery" className="button button-dark" style={{ border: '1px solid rgba(212, 175, 55, 0.4)' }}>
-                Watch Video Walkthrough <span>▶</span>
+                View Visual Gallery <span>↗</span>
               </Link>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
-            SECTION 04: VERIFIED GUEST REVIEWS & ACCOLADES
+            SECTION 04: VERIFIED GUEST REVIEWS
         ========================================================================= */}
         <section className="section-pad bg-[#F4EFE6] border-y border-[rgba(212,175,55,0.25)]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -531,7 +655,7 @@ export const HomePage: React.FC = () => {
         </section>
 
         {/* =========================================================================
-            SECTION 05: PRIME LOCATION & TRAVEL HUBS
+            SECTION 05: PRIME LOCATION & ADDRESS
         ========================================================================= */}
         <section className="location-section section-pad" id="location">
           <div className="location-copy">
@@ -596,7 +720,7 @@ export const HomePage: React.FC = () => {
         </section>
 
         {/* =========================================================================
-            CLOSING GRAND CALL TO ACTION WITH AUTHENTIC ROYAL CREST
+            CLOSING CALL TO ACTION
         ========================================================================= */}
         <section className="closing-cta">
           <div className="flex justify-center mb-6">
@@ -606,20 +730,19 @@ export const HomePage: React.FC = () => {
           <h2>
             Experience Hospitality
             <br />
-            Rooted in <em>True Grandeur.</em>
+            Rooted in <em>True Comfort.</em>
           </h2>
           <div style={{ display: 'flex', gap: '18px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link className="button button-gold" to="/booking">
               Reserve Your Suite Now <span>↗</span>
             </Link>
-            <button
-              type="button"
+            <Link
+              to="/rooms"
               className="button button-dark"
               style={{ border: '1px solid rgba(212, 175, 55, 0.4)' }}
-              onClick={() => setIsEnquiryOpen(true)}
             >
-              Enquire for Banquets &amp; Groups <span>↗</span>
-            </button>
+              Explore All Rooms <span>↗</span>
+            </Link>
           </div>
         </section>
       </main>
@@ -628,3 +751,5 @@ export const HomePage: React.FC = () => {
     </>
   );
 };
+
+export default HomePage;

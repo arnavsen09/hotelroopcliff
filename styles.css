@@ -225,8 +225,9 @@ button {
 ========================================================================= */
 
 .hero {
-  height: min(840px, 86vw);
-  min-height: 640px;
+  height: 540px;
+  max-height: 600px;
+  min-height: 460px;
   position: relative;
   color: white;
   overflow: hidden;
@@ -236,12 +237,12 @@ button {
 .hero-image {
   position: absolute;
   inset: 0;
-  background-image: url("https://gos3.ibcdn.com/78404fdd-27fd-47a7-a929-3def08deee17.jpeg");
+  background-image: url("/cliff suit.jpeg");
   background-size: cover;
-  background-position: center 50%;
-  transform: scale(1.05);
+  background-position: center 45%;
+  transform: scale(1.04);
   animation: heroCinematic 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  filter: saturate(0.85) brightness(0.72) contrast(1.05);
+  filter: saturate(0.95) brightness(0.68) contrast(1.08);
 }
 
 .hero-shade {
@@ -358,41 +359,9 @@ button {
   box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
 }
 
-.hero-note {
-  position: absolute;
-  left: var(--pad);
-  bottom: 40px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: var(--display);
-  z-index: 10;
-}
-
-.note-line {
-  width: 48px;
-  height: 1px;
-  background: var(--gold);
-}
-
+.hero-note,
 .hero-index {
-  position: absolute;
-  right: var(--pad);
-  bottom: 40px;
-  font-family: var(--display);
-  font-size: 16px;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-  z-index: 10;
-}
-
-.hero-index span {
-  opacity: 0.5;
-  margin: 0 6px;
+  display: none;
 }
 
 /* =========================================================================
@@ -644,7 +613,8 @@ h2 em {
 .room-image {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 4/4.4;
+  height: 200px;
+  max-height: 210px;
   background: #D7DFDB;
 }
 
@@ -818,7 +788,8 @@ h2 em {
 .experience-section {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  min-height: 640px;
+  min-height: 380px;
+  max-height: 440px;
   background: var(--green-deep);
   color: white;
   position: relative;
@@ -826,7 +797,8 @@ h2 em {
 }
 
 .experience-photo {
-  min-height: 540px;
+  height: 100%;
+  max-height: 440px;
   position: relative;
 }
 
@@ -1655,3 +1627,23 @@ h2 em {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* =========================================================================
+   LUXURY EDITORIAL BOUTIQUE HOTEL ADDITIONS
+========================================================================= */
+
+.book-stay-cta:hover {
+  background-color: #0D1E18 !important;
+  border-color: #D4AF37 !important;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(13, 30, 24, 0.35) !important;
+}
+
+.suite-showcase-hero {
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.room-details-section {
+  border-bottom: 1px solid rgba(20, 46, 37, 0.08);
+}
+

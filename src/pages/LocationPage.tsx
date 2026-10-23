@@ -24,9 +24,9 @@ export const LocationPage: React.FC = () => {
           <div className="two-col">
             <div>
               <img
-                style={{ width: '100%', maxHeight: '430px', objectFit: 'cover' }}
-                src="https://r1imghtlak.mmtcdn.com/78404fdd-27fd-47a7-a929-3def08deee17.jpeg?crop=480%3A336&downsize=480%3A336&downsize=520%3A350&output-format=jpg&output-quality=75"
-                alt="Roop Cliff hotel exterior"
+                style={{ width: '100%', maxHeight: '430px', objectFit: 'cover', borderRadius: '4px' }}
+                src="/hotel img.jpeg"
+                alt="Hotel Roop Cliff exterior illuminated in MP Nagar Bhopal"
               />
               <h2 style={{ font: '34px var(--serif)', fontWeight: 400, marginTop: '28px' }}>
                 Roop Cliff, Bhopal

@@ -27,15 +27,15 @@ export const DiningPage: React.FC = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '40px' }}>
             <CardTilt maxTilt={4} glare={true} style={{ borderRadius: '8px', overflow: 'hidden', height: '340px' }}>
               <img
-                src="https://gos3.ibcdn.com/c3155b2b-7d32-40b8-b436-e69452890389.jpeg"
-                alt="Roop Cliff Dining Room"
+                src="/staff.jpeg"
+                alt="Roop Cliff Hotel Executive Chef & Hospitality Team"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </CardTilt>
             <CardTilt maxTilt={4} glare={true} style={{ borderRadius: '8px', overflow: 'hidden', height: '340px' }}>
               <img
-                src="https://images.trvl-media.com/lodging/123000000/122350000/122349500/122349432/66991da1.jpg?h=800&impolicy=fcrop&w=1200"
-                alt="In-suite Morning Breakfast Service"
+                src="/dining-food.jpg"
+                alt="Roop Cliff Artisanal Pure Vegetarian Thali Breakfast Platter"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </CardTilt>

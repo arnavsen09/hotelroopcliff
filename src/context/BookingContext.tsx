@@ -45,12 +45,12 @@ export const validateStayDates = (checkin: string, checkout: string): string => 
   return '';
 };
 
-const STORAGE_KEY_BOOKING = 'roopCliffBooking';
-const STORAGE_KEY_ROOMS = 'roopCliffRooms_v2';
-const STORAGE_KEY_GALLERY = 'roopCliffGallery_v2';
-const STORAGE_KEY_ENQUIRIES = 'roopCliffEnquiries_v2';
-const STORAGE_KEY_SETTINGS = 'roopCliffSettings_v2';
-const STORAGE_KEY_ADMIN_AUTH = 'roopCliffAdminAuth_v2';
+const STORAGE_KEY_BOOKING = 'roopCliffBooking_v3';
+const STORAGE_KEY_ROOMS = 'roopCliffRooms_v3';
+const STORAGE_KEY_GALLERY = 'roopCliffGallery_v3';
+const STORAGE_KEY_ENQUIRIES = 'roopCliffEnquiries_v3';
+const STORAGE_KEY_SETTINGS = 'roopCliffSettings_v3';
+const STORAGE_KEY_ADMIN_AUTH = 'roopCliffAdminAuth_v3';
 
 const initialBookingState: BookingState = {
   checkin: plusDays(getTodayDateString(), 1),

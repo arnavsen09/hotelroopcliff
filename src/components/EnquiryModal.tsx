@@ -77,12 +77,12 @@ export const EnquiryModal: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
               <HotelLogo size="sm" theme="dark" linkToHome={false} />
             </div>
-            <span className="eyebrow">VIP CONCIERGE &amp; RESERVATIONS</span>
+            <span className="eyebrow">HOTEL CONCIERGE &amp; RESERVATIONS</span>
             <h2>
-              Send a <em>Privileged Request.</em>
+              Send a <em>Direct Inquiry.</em>
             </h2>
             <p className="dialog-sub">
-              For presidential suites, wedding party blocks, or corporate tariffs, reach out directly to our management desk in MP Nagar, Bhopal.
+              For suite inquiries, group reservations, or corporate tariffs, reach out directly to our management desk in MP Nagar, Bhopal.
             </p>
 
             <form onSubmit={handleSubmit}>

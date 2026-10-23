@@ -1,6 +1,7 @@
 export interface Room {
   id: string;
   name: string;
+  subtitle?: string;
   area: string;
   guests: number;
   bed: string;
@@ -12,6 +13,7 @@ export interface Room {
   desc: string;
   amenities: string[];
   available?: boolean;
+  rateOnRequest?: boolean;
 }
 
 export interface GuestInfo {
@@ -80,4 +82,7 @@ export interface HotelPaymentSettings {
   cancellationPolicyNotice: string;
   supportPhone: string;
   supportEmail: string;
+  githubToken?: string;
+  githubRepo?: string;
+  githubBranch?: string;
 }
