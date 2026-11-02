@@ -48,13 +48,14 @@ export const EnquiryModal: React.FC = () => {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(8, 26, 20, 0.68)',
-        backdropFilter: 'blur(4px)',
-        zIndex: 100,
+        backgroundColor: 'rgba(8, 20, 16, 0.78)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '14px',
+        padding: '16px',
       }}
       onClick={handleClose}
     >
@@ -63,12 +64,36 @@ export const EnquiryModal: React.FC = () => {
         style={{
           position: 'relative',
           display: 'block',
+          width: '100%',
+          maxWidth: '580px',
           maxHeight: '90vh',
           overflowY: 'auto',
+          backgroundColor: '#FFFFFF',
+          color: '#142E25',
+          borderRadius: '12px',
+          padding: 'clamp(28px, 4vw, 40px)',
+          boxShadow: '0 25px 70px rgba(0, 0, 0, 0.45)',
+          border: '1px solid rgba(212, 175, 55, 0.4)',
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="dialog-close" onClick={handleClose} aria-label="Close dialog">
+        <button
+          className="dialog-close"
+          onClick={handleClose}
+          aria-label="Close dialog"
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '18px',
+            background: 'transparent',
+            border: 'none',
+            fontSize: '30px',
+            lineHeight: 1,
+            cursor: 'pointer',
+            color: '#64756D',
+            padding: '4px 8px',
+          }}
+        >
           ×
         </button>
 

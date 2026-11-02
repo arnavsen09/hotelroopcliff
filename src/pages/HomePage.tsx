@@ -370,20 +370,20 @@ export const HomePage: React.FC = () => {
         {/* =========================================================================
             PROMINENT ARCHITECTURAL SHOWCASE: WELCOMING FAÇADE & MAIN ENTRANCE
         ========================================================================= */}
-        <section className="suite-showcase-hero relative overflow-hidden" id="showcase" style={{ background: '#0D1E18', padding: '64px 0 72px' }}>
+        <section className="suite-showcase-hero relative overflow-hidden" id="showcase" style={{ background: '#0D1E18' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Editorial Kicker */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-[#D4AF37]/25 gap-4">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-5 pb-4 border-b border-[#D4AF37]/25 gap-3">
               <div>
-                <span className="text-[10.5px] tracking-[0.28em] uppercase font-bold text-[#D4AF37] block mb-2" style={{ fontFamily: 'Cinzel, Georgia, serif' }}>
+                <span className="text-[10px] tracking-[0.24em] uppercase font-bold text-[#D4AF37] block mb-1.5" style={{ fontFamily: 'Cinzel, Georgia, serif' }}>
                   ARCHITECTURAL DISTINCTION · BHOPAL
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-serif text-[#FAF8F5] tracking-tight leading-tight m-0">
+                <h2 className="text-2xl sm:text-4xl font-serif text-[#FAF8F5] tracking-tight leading-tight m-0">
                   A Considered Sanctuary <br />
                   <em className="italic text-[#ECC870]">Crafted for Stillness.</em>
                 </h2>
               </div>
-              <p className="text-sm text-[#A8BCB1] max-w-md font-light leading-relaxed m-0">
+              <p className="text-xs sm:text-sm text-[#A8BCB1] max-w-md font-light leading-relaxed m-0">
                 Central connectivity, acoustic isolation, and tailored hospitality crafted for restorative stays.
               </p>
             </div>
@@ -392,8 +392,7 @@ export const HomePage: React.FC = () => {
             <div
               className="relative overflow-hidden rounded-md shadow-2xl"
               style={{
-                height: '420px',
-                maxHeight: '450px',
+                height: 'clamp(230px, 35vw, 380px)',
                 width: '100%',
                 position: 'relative',
                 borderRadius: '6px',
@@ -496,11 +495,7 @@ export const HomePage: React.FC = () => {
                   <div>
                     <span className="price-label">ROOM TARIFF</span>
                     <strong>
-                      {room.rateOnRequest ? (
-                        <span>On Request / {formatCurrency(room.rate)}</span>
-                      ) : (
-                        formatCurrency(room.rate)
-                      )}
+                      {formatCurrency(room.rate)}
                       <small> / night</small>
                     </strong>
                     <span className="price-tax">+ {formatCurrency(room.tax)} taxes &amp; fees</span>
@@ -530,7 +525,7 @@ export const HomePage: React.FC = () => {
                     updateBooking({ room: room.name });
                   }}
                 >
-                  {room.name === 'Cliff Suite' ? 'Request This Room' : 'Reserve Suite'} <span>↗</span>
+                  Reserve Suite <span>↗</span>
                 </Link>
               </CardTilt>
             ))}

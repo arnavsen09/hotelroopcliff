@@ -23,7 +23,6 @@ export const INITIAL_ROOMS: Room[] = [
       'Sitting area',
     ],
     available: true,
-    rateOnRequest: true,
   },
   {
     id: 'deluxe-room',

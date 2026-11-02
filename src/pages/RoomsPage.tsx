@@ -297,7 +297,7 @@ export const RoomsPage: React.FC = () => {
                         e.currentTarget.style.backgroundColor = '#142E25';
                       }}
                     >
-                      REQUEST THIS ROOM
+                      RESERVE SUITE
                     </button>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ export const RoomsPage: React.FC = () => {
                     cursor: 'pointer',
                   }}
                 >
-                  Request This Room ↗
+                  Reserve This Suite ↗
                 </button>
               </div>
             </div>

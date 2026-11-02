@@ -139,7 +139,10 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [rooms, setRooms] = useState<Room[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_ROOMS);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return parsed.map((r: Room) => ({ ...r, rateOnRequest: false }));
+      }
     } catch {
       // fallback
     }

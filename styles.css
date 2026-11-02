@@ -462,7 +462,7 @@ button {
 ========================================================================= */
 
 .section-pad {
-  padding: clamp(80px, 9vw, 140px) var(--pad);
+  padding: clamp(38px, 5vw, 68px) var(--pad);
 }
 
 h2 {
@@ -578,11 +578,17 @@ h2 em {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 52px;
+  margin-bottom: 36px;
+  gap: 28px;
+}
+
+.section-heading > div {
+  flex: 1 1 auto;
 }
 
 .section-heading > p {
-  max-width: 300px;
+  flex: 0 0 320px;
+  max-width: 360px;
   font-size: 13px;
   line-height: 1.85;
   color: var(--muted);
@@ -1522,15 +1528,169 @@ h2 em {
   transform: translate(-50%, 0);
 }
 
+/* =========================================================================
+   ENQUIRY & CONTACT MODAL STYLES (SOLID WHITE LUXURY CARD)
+========================================================================= */
+
+.enquiry-dialog,
+.result-dialog {
+  background: #FFFFFF !important;
+  color: var(--green-deep);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 12px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(212, 175, 55, 0.15);
+  padding: clamp(28px, 4.5vw, 42px);
+  width: 100%;
+  max-width: 580px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 105;
+}
+
+.enquiry-dialog h2,
+.result-dialog h2 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 36px);
+  color: var(--green-deep);
+  margin: 10px 0 12px;
+  line-height: 1.2;
+}
+
+.enquiry-dialog h2 em,
+.result-dialog h2 em {
+  font-style: italic;
+  color: var(--gold-dark);
+}
+
+.dialog-sub {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #4C5D54;
+  margin: 0 0 24px;
+}
+
+.enquiry-dialog form {
+  display: flex;
+  flex-direction: column;
+}
+
+.enquiry-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #2D4238;
+  font-family: var(--display);
+  text-transform: uppercase;
+}
+
+.enquiry-dialog input,
+.enquiry-dialog select,
+.enquiry-dialog textarea {
+  border: 1px solid #D2DDD6;
+  background: #FAF8F5;
+  padding: 12px 14px;
+  color: var(--green-deep);
+  font-family: var(--sans);
+  font-size: 13px;
+  width: 100%;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.enquiry-dialog input:focus,
+.enquiry-dialog select:focus,
+.enquiry-dialog textarea:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.enquiry-dialog .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 520px) {
+  .enquiry-dialog .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
 .dialog-close {
   position: absolute;
-  right: 20px;
-  top: 18px;
-  border: 0;
+  right: 18px;
+  top: 16px;
+  border: none;
   background: transparent;
-  font-size: 28px;
+  font-size: 30px;
+  line-height: 1;
+  color: #64756D;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.dialog-close:hover {
   color: var(--green-deep);
-  font-weight: 300;
+  background: rgba(20, 46, 37, 0.06);
+}
+
+.result-icon {
+  width: 58px;
+  height: 58px;
+  background: #E8F3EE;
+  color: #142E25;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0 auto 18px;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+}
+
+.demo-ticket {
+  background: #FAF8F5;
+  border: 1px dashed rgba(212, 175, 55, 0.6);
+  border-radius: 8px;
+  padding: 18px;
+  margin: 22px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.demo-ticket span {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  font-family: var(--display);
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.demo-ticket strong {
+  font-family: var(--display);
+  font-size: 24px;
+  letter-spacing: 0.12em;
+  color: var(--green-deep);
+}
+
+.demo-ticket small {
+  font-size: 11px;
+  color: var(--muted);
 }
 
 /* Animations */
@@ -1586,10 +1746,46 @@ h2 em {
     display: flex;
   }
   .hero {
-    height: 680px;
+    height: auto;
+    min-height: 480px;
+    padding: 40px 0 56px;
   }
   .hero h1 {
-    font-size: clamp(42px, 11vw, 64px);
+    font-size: clamp(34px, 9.5vw, 54px);
+    line-height: 1.15;
+  }
+  .booking-wrap {
+    margin-top: -24px !important;
+    padding: 0 14px;
+  }
+  .suite-showcase-hero {
+    padding: 24px 0 20px !important;
+  }
+  .section-pad {
+    padding: 24px var(--pad);
+  }
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .section-heading > div {
+    width: 100%;
+  }
+  .section-heading h2 {
+    font-size: clamp(26px, 7.5vw, 36px);
+    line-height: 1.16;
+    margin: 8px 0 4px;
+    word-break: normal;
+  }
+  .section-heading > p {
+    flex: auto;
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
   }
   .intro-section {
     grid-template-columns: 1fr;
@@ -1599,6 +1795,15 @@ h2 em {
   }
   .experience-section {
     grid-template-columns: 1fr;
+    max-height: none;
+    min-height: auto;
+  }
+  .experience-panel {
+    padding: 28px 18px;
+  }
+  .experience-panel h2 {
+    font-size: clamp(28px, 7vw, 42px);
+    margin: 12px 0 14px;
   }
   .footer-top,
   .site-footer-top {
@@ -1641,6 +1846,7 @@ h2 em {
 }
 
 .suite-showcase-hero {
+  padding: 38px 0 32px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.25);
 }
 
