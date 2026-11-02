@@ -45,19 +45,34 @@ export const validateStayDates = (checkin: string, checkout: string): string => 
   return '';
 };
 
-const STORAGE_KEY_BOOKING = 'roopCliffBooking_v3';
-const STORAGE_KEY_ROOMS = 'roopCliffRooms_v3';
-const STORAGE_KEY_GALLERY = 'roopCliffGallery_v3';
-const STORAGE_KEY_ENQUIRIES = 'roopCliffEnquiries_v3';
-const STORAGE_KEY_SETTINGS = 'roopCliffSettings_v3';
-const STORAGE_KEY_ADMIN_AUTH = 'roopCliffAdminAuth_v3';
+const STORAGE_KEY_BOOKING = 'roopCliffBooking_v4';
+const STORAGE_KEY_ROOMS = 'roopCliffRooms_v4';
+const STORAGE_KEY_GALLERY = 'roopCliffGallery_v4';
+const STORAGE_KEY_ENQUIRIES = 'roopCliffEnquiries_v4';
+const STORAGE_KEY_SETTINGS = 'roopCliffSettings_v4';
+const STORAGE_KEY_ADMIN_AUTH = 'roopCliffAdminAuth_v4';
+const STORAGE_KEY_ADMIN_HASH = 'roopCliffAdminHash_v1';
+const STORAGE_KEY_ADMIN_LOCK = 'roopCliffAdminLock_v1';
+
+// Cryptographic SHA-256 password hash helper
+export const hashPassword = async (pass: string): Promise<string> => {
+  const enc = new TextEncoder().encode(pass);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+// Default pre-computed SHA-256 hash for initial hotel administrative access
+const DEFAULT_ADMIN_HASH = 'a7282b9ee8cb65443401b8cba783feaf0f72b16c84537cfe009bc5fa621bad52';
+const DEFAULT_ADMIN_EMAIL = 'hotelroopcliff@gmail.com';
 
 const initialBookingState: BookingState = {
   checkin: plusDays(getTodayDateString(), 1),
   checkout: plusDays(getTodayDateString(), 2),
-  room: INITIAL_ROOMS[0].name,
+  room: INITIAL_ROOMS[1].name, // Default to Deluxe Room
   roomQty: '1',
-  guests: '2',
+  guests: '1',
   extraBed: 'no',
   plan: 'room',
 };
@@ -110,10 +125,11 @@ interface BookingContextType {
   paymentSettings: HotelPaymentSettings;
   updatePaymentSettings: (settings: Partial<HotelPaymentSettings>) => void;
 
-  // Admin Auth
+  // Admin Auth & Security
   isAdminLoggedIn: boolean;
-  loginAdmin: (user: string, pass: string) => { success: boolean; error?: string };
+  loginAdmin: (user: string, pass: string) => Promise<{ success: boolean; error?: string }>;
   logoutAdmin: () => void;
+  changeAdminPassword: (currentPass: string, newPass: string) => Promise<{ success: boolean; error?: string }>;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -209,29 +225,139 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   }, [paymentSettings]);
 
-  // 5. Admin Authentication
+  // 5. Admin Authentication & Security Hardening
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
     try {
-      return sessionStorage.getItem(STORAGE_KEY_ADMIN_AUTH) === 'authenticated';
+      const raw = sessionStorage.getItem(STORAGE_KEY_ADMIN_AUTH);
+      if (raw) {
+        if (raw.startsWith('{')) {
+          const parsed = JSON.parse(raw);
+          if (parsed.expiresAt && Date.now() < parsed.expiresAt) {
+            return true;
+          }
+          sessionStorage.removeItem(STORAGE_KEY_ADMIN_AUTH);
+          return false;
+        }
+        return raw === 'authenticated';
+      }
     } catch {
       return false;
     }
+    return false;
   });
 
-  const loginAdmin = (user: string, pass: string): { success: boolean; error?: string } => {
+  const loginAdmin = async (user: string, pass: string): Promise<{ success: boolean; error?: string }> => {
     const trimmedUser = user.trim().toLowerCase();
     const trimmedPass = pass.trim();
 
-    if (trimmedUser === 'hotelroopcliff@gmail.com' && trimmedPass === 'Hotel@906') {
+    // Check brute-force lockout status
+    let lockData = { attempts: 0, lockedUntil: 0 };
+    try {
+      const savedLock = localStorage.getItem(STORAGE_KEY_ADMIN_LOCK);
+      if (savedLock) lockData = JSON.parse(savedLock);
+    } catch {
+      // ignore
+    }
+
+    if (lockData.lockedUntil && Date.now() < lockData.lockedUntil) {
+      const remainingSec = Math.max(1, Math.ceil((lockData.lockedUntil - Date.now()) / 1000));
+      const mins = Math.ceil(remainingSec / 60);
+      return {
+        success: false,
+        error: `Console locked for security due to multiple failed attempts. Please wait ${mins} minute(s) (${remainingSec}s).`,
+      };
+    }
+
+    // Retrieve active hashed credentials
+    const activeEmail = (paymentSettings.supportEmail || DEFAULT_ADMIN_EMAIL).toLowerCase();
+    const activeHash = localStorage.getItem(STORAGE_KEY_ADMIN_HASH) || DEFAULT_ADMIN_HASH;
+
+    const inputHash = await hashPassword(trimmedPass);
+
+    const isEmailValid = trimmedUser === DEFAULT_ADMIN_EMAIL || trimmedUser === activeEmail;
+    const isPasswordValid = inputHash === activeHash;
+
+    if (isEmailValid && isPasswordValid) {
+      // Clear any lockout upon success
       try {
-        sessionStorage.setItem(STORAGE_KEY_ADMIN_AUTH, 'authenticated');
+        localStorage.removeItem(STORAGE_KEY_ADMIN_LOCK);
       } catch {
         // ignore
       }
+
+      // Create secure timed session token (2 hours validity)
+      const sessionData = {
+        token: 'rc_auth_' + Math.random().toString(36).slice(2) + Date.now().toString(36),
+        issuedAt: Date.now(),
+        expiresAt: Date.now() + 2 * 3600 * 1000,
+      };
+
+      try {
+        sessionStorage.setItem(STORAGE_KEY_ADMIN_AUTH, JSON.stringify(sessionData));
+      } catch {
+        // ignore
+      }
+
       setIsAdminLoggedIn(true);
       return { success: true };
     }
-    return { success: false, error: 'Invalid management email or administrative password.' };
+
+    // Record failed attempt
+    const newAttempts = (lockData.attempts || 0) + 1;
+    if (newAttempts >= 5) {
+      const lockUntil = Date.now() + 5 * 60 * 1000; // 5-minute lockout
+      try {
+        localStorage.setItem(
+          STORAGE_KEY_ADMIN_LOCK,
+          JSON.stringify({ attempts: 0, lockedUntil: lockUntil })
+        );
+      } catch {
+        // ignore
+      }
+      return {
+        success: false,
+        error: 'Too many consecutive failed attempts. Console locked for 5 minutes for hotel security.',
+      };
+    } else {
+      try {
+        localStorage.setItem(
+          STORAGE_KEY_ADMIN_LOCK,
+          JSON.stringify({ attempts: newAttempts, lockedUntil: 0 })
+        );
+      } catch {
+        // ignore
+      }
+      const attemptsRemaining = 5 - newAttempts;
+      return {
+        success: false,
+        error: `Invalid credentials. ${attemptsRemaining} attempt(s) remaining before security lockout.`,
+      };
+    }
+  };
+
+  const changeAdminPassword = async (
+    currentPass: string,
+    newPass: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    if (!isAdminLoggedIn) return { success: false, error: 'Unauthorized.' };
+    if (!newPass || newPass.length < 8) {
+      return { success: false, error: 'New password must be at least 8 characters long.' };
+    }
+
+    const activeHash = localStorage.getItem(STORAGE_KEY_ADMIN_HASH) || DEFAULT_ADMIN_HASH;
+    const inputCurrentHash = await hashPassword(currentPass.trim());
+
+    if (inputCurrentHash !== activeHash) {
+      return { success: false, error: 'Current password verification failed.' };
+    }
+
+    const newHash = await hashPassword(newPass.trim());
+    try {
+      localStorage.setItem(STORAGE_KEY_ADMIN_HASH, newHash);
+    } catch {
+      // ignore
+    }
+    return { success: true };
   };
 
   const logoutAdmin = () => {
@@ -378,12 +504,42 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     INITIAL_ROOMS[0];
 
   const nights = calculateNights(booking.checkin, booking.checkout);
-  const rate = booking.plan === 'breakfast' ? activeRoom.breakfast : activeRoom.rate;
-  const tax = booking.plan === 'breakfast' ? activeRoom.breakfastTax : activeRoom.tax;
   const quantity = Math.max(1, Number(booking.roomQty || 1));
+  const guestCount = Math.max(1, parseInt(booking.guests || '1', 10));
+
+  // Average guests per room
+  const guestsPerRoom = Math.max(1, Math.ceil(guestCount / quantity));
+
+  // Base rate is for 1 guest (Single Occupancy)
+  const baseRate = activeRoom.rate;
+
+  // Incremental adjustment for additional guests per room:
+  // 1 guest: +₹0 (base rate)
+  // 2 guests: +₹600 (double occupancy)
+  // 3+ guests: +₹600 + (guests - 2) * ₹750 (triple / group occupancy)
+  let guestAdjustment = 0;
+  if (guestsPerRoom === 2) {
+    guestAdjustment = 600;
+  } else if (guestsPerRoom >= 3) {
+    guestAdjustment = 600 + (guestsPerRoom - 2) * 750;
+  }
+
+  // Breakfast charge per guest per night
+  const perGuestBreakfastRate = Math.max(350, Math.round((activeRoom.breakfast - activeRoom.rate) || 350));
+  const breakfastCharge = booking.plan === 'breakfast' ? perGuestBreakfastRate * guestsPerRoom : 0;
+
+  // Extra bed/mattress charge: ₹750/night per room if requested
+  const extraBedCharge = booking.extraBed === 'yes' ? 750 : 0;
+
+  // Effective nightly rate per room
+  const rate = baseRate + guestAdjustment + breakfastCharge + extraBedCharge;
+
+  // Tax calculation: Standard GST 12% on accommodation
+  const tax = Math.round(rate * 0.12);
+
   const subtotal = rate * quantity * nights;
   const taxTotal = tax * quantity * nights;
-  const total = (rate + tax) * quantity * nights;
+  const total = subtotal + taxTotal;
 
   const amount: AmountBreakdown = {
     nights,
@@ -393,6 +549,11 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     subtotal,
     taxTotal,
     total,
+    baseRate,
+    guestAdjustment,
+    breakfastPerNight: breakfastCharge,
+    extraBedPerNight: extraBedCharge,
+    guestCount,
   };
 
   return (
@@ -426,6 +587,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         isAdminLoggedIn,
         loginAdmin,
         logoutAdmin,
+        changeAdminPassword,
       }}
     >
       {children}

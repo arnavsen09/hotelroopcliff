@@ -50,22 +50,27 @@ export const HomePage: React.FC = () => {
     <>
       <main>
         {/* =========================================================================
-            HERO SECTION: IMMERSIVE SUITE INTERIOR & BRAND IDENTITY
+            HERO SECTION: WELCOMING GRAND HOTEL ENTRANCE & BESPOKE HOSPITALITY
         ========================================================================= */}
         <section className="hero">
-          <div className="hero-image" role="img" aria-label="Roop Cliff Hotel Luxury Suite Interior" />
+          <div
+            className="hero-image"
+            role="img"
+            aria-label="Roop Cliff Hotel Grand Welcoming Entrance and Facade"
+            style={{ backgroundImage: 'url("/hotel img (2).jpeg")' }}
+          />
           <div className="hero-shade" />
 
           <div className="hero-content">
             {/* Header Crest Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[rgba(13,30,24,0.8)] backdrop-blur-xl border border-[rgba(212,175,55,0.45)] mb-4 shadow-xl">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[rgba(13,30,24,0.85)] backdrop-blur-xl border border-[rgba(212,175,55,0.45)] mb-4 shadow-xl">
               <img
                 src="/logo-gold.png"
                 alt="Roop Cliff Crest"
                 style={{ height: '18px', width: 'auto', objectFit: 'contain' }}
               />
-              <span className="text-[9px] tracking-[0.24em] uppercase font-bold text-[#F2E3B5]">
-                ZONE-I · MP NAGAR · BHOPAL
+              <span className="text-[9.5px] tracking-[0.24em] uppercase font-bold text-[#F2E3B5]">
+                BHOPAL, MADHYA PRADESH
               </span>
             </div>
 
@@ -76,7 +81,7 @@ export const HomePage: React.FC = () => {
             </h1>
 
             <p className="hero-copy">
-              Welcome to Roop Cliff Hotel — where timeless Indian heritage meets contemporary hospitality. Discover bespoke suites, quiet architectural comfort, and refined culinary indulgences in MP Nagar.
+              Where timeless Indian hospitality meets contemporary comfort. Discover bespoke suites, quiet elegance, and refined dining.
             </p>
 
             <div className="flex gap-4 flex-wrap items-center mt-6">
@@ -88,7 +93,7 @@ export const HomePage: React.FC = () => {
                 type="button"
                 className="button button-dark"
                 style={{
-                  background: 'rgba(13, 30, 24, 0.75)',
+                  background: 'rgba(13, 30, 24, 0.8)',
                   backdropFilter: 'blur(16px)',
                   border: '1px solid rgba(212, 175, 55, 0.45)',
                 }}
@@ -102,7 +107,7 @@ export const HomePage: React.FC = () => {
         </section>
 
         {/* =========================================================================
-            CLEAN, PROPERLY ALIGNED RESERVATION CONSOLE
+            HIGH-CONTRAST, PROMINENT RESERVATION CONSOLE
         ========================================================================= */}
         <section className="booking-wrap" id="booking" style={{ position: 'relative', zIndex: 25, marginTop: '-42px' }}>
           <form
@@ -113,11 +118,11 @@ export const HomePage: React.FC = () => {
               margin: '0 auto',
               background: '#FFFFFF',
               borderRadius: '8px',
-              border: '1px solid rgba(212, 175, 55, 0.35)',
-              boxShadow: '0 20px 50px rgba(13, 30, 24, 0.12)',
+              border: '1.5px solid rgba(212, 175, 55, 0.45)',
+              boxShadow: '0 24px 60px rgba(13, 30, 24, 0.16)',
               padding: '24px 28px',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr)) auto',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr)) auto',
               gap: '20px',
               alignItems: 'end',
             }}
@@ -131,16 +136,16 @@ export const HomePage: React.FC = () => {
                 alignItems: 'center',
                 flexWrap: 'wrap',
                 gap: '8px',
-                paddingBottom: '12px',
-                borderBottom: '1px solid rgba(20, 46, 37, 0.08)',
+                paddingBottom: '14px',
+                borderBottom: '1px solid rgba(20, 46, 37, 0.12)',
               }}
             >
               <div>
                 <span
                   style={{
-                    fontSize: '9px',
+                    fontSize: '10px',
                     letterSpacing: '0.22em',
-                    fontWeight: 700,
+                    fontWeight: 800,
                     color: '#AA8222',
                     textTransform: 'uppercase',
                     display: 'block',
@@ -152,35 +157,37 @@ export const HomePage: React.FC = () => {
                 <strong
                   style={{
                     fontFamily: 'Cormorant Garamond, Georgia, serif',
-                    fontSize: '22px',
-                    color: '#142E25',
-                    fontWeight: 600,
+                    fontSize: '24px',
+                    color: '#0D1E18',
+                    fontWeight: 700,
                   }}
                 >
                   Reserve Your Stay
                 </strong>
               </div>
-              <span style={{ fontSize: '11px', color: '#64756D' }}>
-                {nights} {nights === 1 ? 'Night' : 'Nights'} · Best direct rate guarantee with complimentary Wi-Fi
+              <span style={{ fontSize: '12px', color: '#1E352B', fontWeight: 600 }}>
+                {nights} {nights === 1 ? 'Night' : 'Nights'} · Best direct rate guarantee with complimentary high-speed Wi-Fi
               </span>
             </div>
 
             {/* Check-in */}
             <div>
-              <span
+              <label
+                htmlFor="checkin"
                 style={{
-                  fontSize: '8.5px',
-                  letterSpacing: '0.18em',
-                  fontWeight: 700,
-                  color: '#AA8222',
+                  fontSize: '11.5px',
+                  letterSpacing: '0.1em',
+                  fontWeight: 800,
+                  color: '#0D1E18',
                   textTransform: 'uppercase',
-                  display: 'block',
-                  marginBottom: '6px',
-                  fontFamily: 'Cinzel, serif',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '8px',
                 }}
               >
-                CHECK-IN DATE
-              </span>
+                <span style={{ color: '#AA8222' }}>✦</span> CHECK-IN DATE
+              </label>
               <input
                 id="checkin"
                 type="date"
@@ -196,34 +203,36 @@ export const HomePage: React.FC = () => {
                 }}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  border: '1px solid rgba(20, 46, 37, 0.18)',
-                  borderRadius: '4px',
-                  fontSize: '13px',
-                  color: '#142E25',
-                  backgroundColor: '#FAF8F5',
+                  padding: '12px 14px',
+                  border: '1.5px solid rgba(20, 46, 37, 0.32)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  color: '#0D1E18',
+                  backgroundColor: '#FFFFFF',
                   outline: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
                 }}
               />
             </div>
 
             {/* Check-out */}
             <div>
-              <span
+              <label
+                htmlFor="checkout"
                 style={{
-                  fontSize: '8.5px',
-                  letterSpacing: '0.18em',
-                  fontWeight: 700,
-                  color: '#AA8222',
+                  fontSize: '11.5px',
+                  letterSpacing: '0.1em',
+                  fontWeight: 800,
+                  color: '#0D1E18',
                   textTransform: 'uppercase',
-                  display: 'block',
-                  marginBottom: '6px',
-                  fontFamily: 'Cinzel, serif',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '8px',
                 }}
               >
-                CHECK-OUT DATE
-              </span>
+                <span style={{ color: '#AA8222' }}>✦</span> CHECK-OUT DATE
+              </label>
               <input
                 id="checkout"
                 type="date"
@@ -233,92 +242,96 @@ export const HomePage: React.FC = () => {
                 onChange={(e) => setSearchCheckout(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  border: '1px solid rgba(20, 46, 37, 0.18)',
-                  borderRadius: '4px',
-                  fontSize: '13px',
-                  color: '#142E25',
-                  backgroundColor: '#FAF8F5',
+                  padding: '12px 14px',
+                  border: '1.5px solid rgba(20, 46, 37, 0.32)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  color: '#0D1E18',
+                  backgroundColor: '#FFFFFF',
                   outline: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
                 }}
               />
             </div>
 
             {/* Guests */}
             <div>
-              <span
+              <label
+                htmlFor="guests"
                 style={{
-                  fontSize: '8.5px',
-                  letterSpacing: '0.18em',
-                  fontWeight: 700,
-                  color: '#AA8222',
+                  fontSize: '11.5px',
+                  letterSpacing: '0.1em',
+                  fontWeight: 800,
+                  color: '#0D1E18',
                   textTransform: 'uppercase',
-                  display: 'block',
-                  marginBottom: '6px',
-                  fontFamily: 'Cinzel, serif',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '8px',
                 }}
               >
-                GUESTS
-              </span>
+                <span style={{ color: '#AA8222' }}>✦</span> OCCUPANCY
+              </label>
               <select
                 id="guests"
                 value={searchGuests}
                 onChange={(e) => setSearchGuests(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  border: '1px solid rgba(20, 46, 37, 0.18)',
-                  borderRadius: '4px',
-                  fontSize: '13px',
-                  color: '#142E25',
-                  backgroundColor: '#FAF8F5',
+                  padding: '12px 14px',
+                  border: '1.5px solid rgba(20, 46, 37, 0.32)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  color: '#0D1E18',
+                  backgroundColor: '#FFFFFF',
                   outline: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
                 }}
               >
-                <option value="1">1 Guest · Solo Traveler</option>
-                <option value="2">2 Guests · Couple / Deluxe</option>
-                <option value="3">3 Guests · Executive Group</option>
-                <option value="4">4 Guests · Family Suite</option>
-                <option value="5">5+ Guests · Multi-Suite</option>
+                <option value="1">1 Guest (Single · Base Tariff)</option>
+                <option value="2">2 Guests (Double · +₹600/nt)</option>
+                <option value="3">3 Guests (Triple · +₹1,350/nt)</option>
+                <option value="4">4 Guests (Group Suite)</option>
               </select>
             </div>
 
             {/* Room Category */}
             <div>
-              <span
+              <label
+                htmlFor="roomCategory"
                 style={{
-                  fontSize: '8.5px',
-                  letterSpacing: '0.18em',
-                  fontWeight: 700,
-                  color: '#AA8222',
+                  fontSize: '11.5px',
+                  letterSpacing: '0.1em',
+                  fontWeight: 800,
+                  color: '#0D1E18',
                   textTransform: 'uppercase',
-                  display: 'block',
-                  marginBottom: '6px',
-                  fontFamily: 'Cinzel, serif',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '8px',
                 }}
               >
-                SUITE CATEGORY
-              </span>
+                <span style={{ color: '#AA8222' }}>✦</span> SUITE CATEGORY
+              </label>
               <select
+                id="roomCategory"
                 value={searchRoomType}
                 onChange={(e) => setSearchRoomType(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  border: '1px solid rgba(20, 46, 37, 0.18)',
-                  borderRadius: '4px',
-                  fontSize: '13px',
-                  color: '#142E25',
-                  backgroundColor: '#FAF8F5',
+                  padding: '12px 14px',
+                  border: '1.5px solid rgba(20, 46, 37, 0.32)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  color: '#0D1E18',
+                  backgroundColor: '#FFFFFF',
                   outline: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
                 }}
               >
                 {rooms.map((r) => (
                   <option key={r.id || r.name} value={r.name}>
-                    {r.name} ({formatCurrency(r.rate)}/nt)
+                    {r.name} (from {formatCurrency(r.rate)}/nt)
                   </option>
                 ))}
               </select>
@@ -331,11 +344,11 @@ export const HomePage: React.FC = () => {
                 type="submit"
                 style={{
                   width: '100%',
-                  minHeight: '42px',
-                  padding: '10px 24px',
-                  fontSize: '11px',
+                  minHeight: '46px',
+                  padding: '12px 26px',
+                  fontSize: '12px',
                   letterSpacing: '0.12em',
-                  fontWeight: 700,
+                  fontWeight: 800,
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
                   display: 'flex',
@@ -349,21 +362,21 @@ export const HomePage: React.FC = () => {
             </div>
           </form>
 
-          <p className="demo-note" style={{ maxWidth: '1240px', margin: '10px auto 0' }}>
-            <span className="dot" /> Real-time direct booking channel · Managed live through the hotel management portal
+          <p className="demo-note" style={{ maxWidth: '1240px', margin: '12px auto 0', color: '#4D6157', fontSize: '11px' }}>
+            <span className="dot" /> Verified direct booking console · Best rates guaranteed with immediate confirmation
           </p>
         </section>
 
         {/* =========================================================================
-            PROMINENT ARCHITECTURAL SHOWCASE: ONE IMAGE (THE LAST ONE: HOTEL FAÇADE)
+            PROMINENT ARCHITECTURAL SHOWCASE: WELCOMING FAÇADE & MAIN ENTRANCE
         ========================================================================= */}
         <section className="suite-showcase-hero relative overflow-hidden" id="showcase" style={{ background: '#0D1E18', padding: '64px 0 72px' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Editorial Kicker */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-[#D4AF37]/25 gap-4">
               <div>
-                <span className="text-[10px] tracking-[0.28em] uppercase font-bold text-[#D4AF37] block mb-2" style={{ fontFamily: 'Cinzel, Georgia, serif' }}>
-                  BOUTIQUE ARCHITECTURE · ZONE-I MP NAGAR
+                <span className="text-[10.5px] tracking-[0.28em] uppercase font-bold text-[#D4AF37] block mb-2" style={{ fontFamily: 'Cinzel, Georgia, serif' }}>
+                  ARCHITECTURAL DISTINCTION · BHOPAL
                 </span>
                 <h2 className="text-3xl sm:text-5xl font-serif text-[#FAF8F5] tracking-tight leading-tight m-0">
                   A Considered Sanctuary <br />
@@ -371,7 +384,7 @@ export const HomePage: React.FC = () => {
                 </h2>
               </div>
               <p className="text-sm text-[#A8BCB1] max-w-md font-light leading-relaxed m-0">
-                Immerse yourself in our premier accommodation. Central location, acoustic isolation, and tailored hospitality in the heart of MP Nagar, Bhopal.
+                Central connectivity, acoustic isolation, and tailored hospitality crafted for restorative stays.
               </p>
             </div>
 
@@ -389,7 +402,7 @@ export const HomePage: React.FC = () => {
             >
               <img
                 src="/hotel img.jpeg"
-                alt="Hotel Roop Cliff Boutique Architecture at Twilight in MP Nagar Bhopal"
+                alt="Hotel Roop Cliff Welcoming Facade and Architecture"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
               <div
@@ -413,9 +426,6 @@ export const HomePage: React.FC = () => {
                 }}
               >
                 <div>
-                  <span style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: '#ECC870', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
-                    ZONE-I · MAHARANA PRATAP NAGAR · BHOPAL
-                  </span>
                   <h3 style={{ fontSize: '24px', fontFamily: 'Cormorant Garamond, Georgia, serif', margin: 0, color: '#FAF8F5' }}>
                     Hotel Roop Cliff
                   </h3>
@@ -525,10 +535,6 @@ export const HomePage: React.FC = () => {
               </CardTilt>
             ))}
           </div>
-
-          <p className="fine-print">
-            Rates reflect current verified direct tariff listings for Roop Cliff Hotel, Bhopal. Custom corporate bookings and banquet requirements can be tailored directly with hotel management.
-          </p>
         </section>
 
         {/* =========================================================================
@@ -551,7 +557,7 @@ export const HomePage: React.FC = () => {
               <em>Effortless Ease.</em>
             </h2>
             <p>
-              From our morning vegetarian breakfast spread featuring local specialties to personalized business concierge amenities, Roop Cliff is tuned for discerning business leaders, wedding families, and leisure travelers.
+              From our morning pure vegetarian breakfast to 24-hour concierge care, every touchpoint is designed for your complete comfort.
             </p>
 
             <div className="amenities">
@@ -569,7 +575,7 @@ export const HomePage: React.FC = () => {
               </div>
               <div>
                 <span className="amenity-icon">⌖</span>
-                <span>Central Zone-I MP Nagar Hub</span>
+                <span>Prime Central Location</span>
               </div>
             </div>
 
@@ -602,7 +608,7 @@ export const HomePage: React.FC = () => {
               {[
                 {
                   quote:
-                    'The location in Zone-I MP Nagar is unbeatable. Rooms are immaculately clean, beds are exceptionally comfortable, and the staff is genuinely gracious.',
+                    'The central location is unbeatable. Rooms are immaculately clean, beds are exceptionally comfortable, and the staff is genuinely gracious.',
                   author: 'Rajeev Sharma',
                   role: 'Corporate Executive, Mumbai',
                   rating: 5,
@@ -659,14 +665,14 @@ export const HomePage: React.FC = () => {
         ========================================================================= */}
         <section className="location-section section-pad" id="location">
           <div className="location-copy">
-            <span className="eyebrow">04 / THE ADDRESS</span>
+            <span className="eyebrow">04 / LOCATION</span>
             <h2>
-              Strategically Located
+              Strategically Situated in
               <br />
-              in <em>Zone-I, MP Nagar.</em>
+              the <em>Heart of Bhopal.</em>
             </h2>
             <p>
-              Located along Narmadapuram Road near Chetak Bridge, Roop Cliff offers swift connectivity to Rani Kamlapati Railway Station (Habibganj), DB City Mall, government secretariats, and Raja Bhoj Airport.
+              Located along Narmadapuram Road near Chetak Bridge, offering swift connectivity to Rani Kamlapati Railway Station, DB City Mall, and commercial secretariats.
             </p>
 
             <div className="address-card">
@@ -703,7 +709,7 @@ export const HomePage: React.FC = () => {
                 <span>RC</span>
               </div>
               <div className="map-label">
-                ROOP CLIFF HOTEL <small>ZONE-I · CHETAK BRIDGE · BHOPAL</small>
+                ROOP CLIFF HOTEL <small>CHETAK BRIDGE · BHOPAL</small>
               </div>
               <span className="map-compass">NORTH ↑</span>
             </div>

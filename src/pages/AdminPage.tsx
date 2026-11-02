@@ -26,12 +26,19 @@ export const AdminPage: React.FC = () => {
     paymentSettings,
     updatePaymentSettings,
     showToast,
+    changeAdminPassword,
   } = useBooking();
 
   // Login form state
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
+
+  // Password change state
+  const [currentPw, setCurrentPw] = useState('');
+  const [newPw, setNewPw] = useState('');
+  const [confirmPw, setConfirmPw] = useState('');
+  const [pwStatus, setPwStatus] = useState<string | null>(null);
 
   // Active tab in admin
   const [activeTab, setActiveTab] = useState<'rooms' | 'gallery' | 'enquiries' | 'payments'>('rooms');
@@ -71,15 +78,35 @@ export const AdminPage: React.FC = () => {
     caption: '',
   });
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError(null);
-    const res = loginAdmin(emailInput, passwordInput);
+    const res = await loginAdmin(emailInput, passwordInput);
     if (!res.success) {
       setLoginError(res.error || 'Authentication failed');
       showToast('Login failed. Please check credentials.');
     } else {
       showToast('Welcome back, Hotel Roop Cliff Management.');
+    }
+  };
+
+  const handlePasswordChangeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPwStatus(null);
+    if (newPw !== confirmPw) {
+      setPwStatus('New passwords do not match.');
+      return;
+    }
+    const res = await changeAdminPassword(currentPw, newPw);
+    if (!res.success) {
+      setPwStatus(res.error || 'Password update failed.');
+      showToast('Password change failed.');
+    } else {
+      setPwStatus('Password updated successfully! Future logins will require the new password.');
+      showToast('Admin password successfully updated.');
+      setCurrentPw('');
+      setNewPw('');
+      setConfirmPw('');
     }
   };
 
@@ -194,7 +221,7 @@ export const AdminPage: React.FC = () => {
                     id="adminEmail"
                     type="email"
                     required
-                    placeholder="hotelroopcliff@gmail.com"
+                    placeholder="Enter management email"
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
                     autoComplete="username"
@@ -207,7 +234,7 @@ export const AdminPage: React.FC = () => {
                     id="adminPassword"
                     type="password"
                     required
-                    placeholder="••••••••••"
+                    placeholder="••••••••••••"
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
                     autoComplete="current-password"
@@ -218,43 +245,6 @@ export const AdminPage: React.FC = () => {
                   Authorize &amp; Enter Portal <span>↗</span>
                 </button>
               </form>
-
-              <div
-                style={{
-                  marginTop: '24px',
-                  padding: '14px',
-                  background: 'var(--cream)',
-                  borderRadius: '4px',
-                  border: '1px solid var(--line)',
-                  fontSize: '10px',
-                  color: 'var(--muted)',
-                }}
-              >
-                <div style={{ fontWeight: 600, color: 'var(--green)', marginBottom: '6px' }}>
-                  Configured Hotel Credentials:
-                </div>
-                <div>Username: <code>hotelroopcliff@gmail.com</code></div>
-                <div>Password: <code>Hotel@906</code></div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmailInput('hotelroopcliff@gmail.com');
-                    setPasswordInput('Hotel@906');
-                  }}
-                  style={{
-                    marginTop: '8px',
-                    padding: '5px 10px',
-                    background: 'var(--green)',
-                    color: '#fff',
-                    border: 0,
-                    borderRadius: '3px',
-                    fontSize: '9px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Click to prefill credentials
-                </button>
-              </div>
             </div>
           </section>
         </main>
@@ -934,6 +924,73 @@ export const AdminPage: React.FC = () => {
 
                   <button className="button button-dark" type="submit">
                     Save Payment Configuration <span>↗</span>
+                  </button>
+                </form>
+              </div>
+
+              {/* ADMINISTRATIVE SECURITY & ACCESS CREDENTIALS */}
+              <div className="surface-card" style={{ marginTop: '24px' }}>
+                <span className="eyebrow">ADMINISTRATIVE ACCESS SECURITY</span>
+                <h3>Update Management Password</h3>
+                <p style={{ fontSize: '11px', color: 'var(--muted)', margin: '4px 0 16px' }}>
+                  Handing over the site to hotel management? Update your administrative password here. Passwords are cryptographically encrypted with SHA-256 and protected with automatic brute-force lockout defense.
+                </p>
+
+                {pwStatus && (
+                  <div
+                    style={{
+                      background: pwStatus.includes('successfully') ? '#e6f4ea' : '#fde8e8',
+                      border: `1px solid ${pwStatus.includes('successfully') ? '#b7e1cd' : '#f8b4b4'}`,
+                      color: pwStatus.includes('successfully') ? '#137333' : '#9b1c1c',
+                      padding: '10px 14px',
+                      borderRadius: '4px',
+                      fontSize: '11px',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    {pwStatus}
+                  </div>
+                )}
+
+                <form onSubmit={handlePasswordChangeSubmit}>
+                  <div className="form-field">
+                    <label>CURRENT PASSWORD</label>
+                    <input
+                      type="password"
+                      required
+                      placeholder="••••••••••••"
+                      value={currentPw}
+                      onChange={(e) => setCurrentPw(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="field-grid">
+                    <label className="form-field">
+                      NEW PASSWORD (MIN. 8 CHARS)
+                      <input
+                        type="password"
+                        required
+                        minLength={8}
+                        placeholder="New secure password"
+                        value={newPw}
+                        onChange={(e) => setNewPw(e.target.value)}
+                      />
+                    </label>
+                    <label className="form-field">
+                      CONFIRM NEW PASSWORD
+                      <input
+                        type="password"
+                        required
+                        minLength={8}
+                        placeholder="Re-enter new password"
+                        value={confirmPw}
+                        onChange={(e) => setConfirmPw(e.target.value)}
+                      />
+                    </label>
+                  </div>
+
+                  <button className="button button-dark" type="submit" style={{ marginTop: '8px' }}>
+                    Update Admin Password <span>↗</span>
                   </button>
                 </form>
               </div>

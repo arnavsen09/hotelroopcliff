@@ -15,42 +15,17 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      {/* Editorial Announcement Bar */}
-      <div className="announcement">
-        <span className="flex items-center gap-2">
-          <span>ZONE-I · MP NAGAR · BHOPAL</span>
-        </span>
-        <span className="flex items-center gap-3">
-          <span>A CONSIDERED BOUTIQUE STAY</span>
-          {isAdminLoggedIn ? (
-            <Link
-              to="/admin"
-              className="inline-flex items-center gap-1 text-[#D4AF37] font-semibold bg-[#D4AF37]/10 px-2 py-0.5 rounded text-[8.5px]"
-            >
-              ★ Management Active
-            </Link>
-          ) : (
-            <Link
-              to="/admin"
-              className="hover:text-white transition-colors text-[8px] text-white/60 tracking-widest uppercase"
-            >
-              Management
-            </Link>
-          )}
-        </span>
-      </div>
-
       {/* Minimalist Editorial Luxury Top Header */}
       <header className="site-header" id="top">
-        {/* Brand Zone: ROOP CLIFF BHOPAL */}
+        {/* Brand Zone: Roop Cliff Hotel */}
         <Link
           to="/"
-          className="flex items-center gap-3.5 group text-decoration-none outline-none focus-visible:ring-1 focus-visible:ring-[#142E25]"
-          aria-label="Roop Cliff Bhopal - Home"
+          className="flex items-center gap-3 group text-decoration-none outline-none focus-visible:ring-1 focus-visible:ring-[#142E25]"
+          aria-label="Roop Cliff Hotel - Home"
         >
           <img
             src="/logo-transparent.png"
-            alt="Roop Cliff Emblem"
+            alt="Roop Cliff Hotel Crest Emblem"
             style={{
               height: '38px',
               maxHeight: '38px',
@@ -60,20 +35,12 @@ export const Header: React.FC = () => {
               display: 'block',
             }}
           />
-          <div className="flex flex-col">
-            <span
-              className="text-base sm:text-lg tracking-[0.16em] uppercase font-bold text-[#142E25] whitespace-nowrap"
-              style={{ fontFamily: 'Cinzel, Georgia, serif' }}
-            >
-              ROOP CLIFF BHOPAL
-            </span>
-            <span
-              className="text-[8px] sm:text-[8.5px] tracking-[0.24em] text-[#64756D] uppercase font-medium"
-              style={{ fontFamily: 'Manrope, sans-serif' }}
-            >
-              BOUTIQUE HOTEL · MP NAGAR
-            </span>
-          </div>
+          <span
+            className="text-base sm:text-lg tracking-[0.04em] font-bold text-[#142E25] whitespace-nowrap"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            Roop Cliff Hotel
+          </span>
         </Link>
 
         {/* Mobile Hamburger Toggle */}

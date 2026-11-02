@@ -45,6 +45,11 @@ export interface AmountBreakdown {
   subtotal: number;
   taxTotal: number;
   total: number;
+  baseRate?: number;
+  guestAdjustment?: number;
+  breakfastPerNight?: number;
+  extraBedPerNight?: number;
+  guestCount?: number;
 }
 
 export interface GalleryMediaItem {

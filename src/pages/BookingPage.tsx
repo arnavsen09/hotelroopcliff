@@ -122,21 +122,17 @@ export const BookingPage: React.FC = () => {
 
                 <div className="field-grid">
                   <label className="form-field">
-                    ADULTS
+                    GUESTS / OCCUPANCY
                     <select
                       id="bookingGuests"
                       name="guests"
-                      value={booking.guests || '2'}
+                      value={booking.guests || '1'}
                       onChange={(e) => updateBooking({ guests: e.target.value })}
                     >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
+                      <option value="1">1 Guest (Single · Base Tariff)</option>
+                      <option value="2">2 Guests (Double · +₹600/nt)</option>
+                      <option value="3">3 Guests (Triple · +₹1,350/nt)</option>
+                      <option value="4">4 Guests (Group Suite)</option>
                     </select>
                   </label>
                   <label className="form-field">
@@ -148,7 +144,7 @@ export const BookingPage: React.FC = () => {
                       onChange={(e) => updateBooking({ extraBed: e.target.value as 'no' | 'yes' })}
                     >
                       <option value="no">No extra bed</option>
-                      <option value="yes">Request extra bed / mattress</option>
+                      <option value="yes">Request extra bed (+₹750/nt)</option>
                     </select>
                   </label>
                 </div>
@@ -160,13 +156,13 @@ export const BookingPage: React.FC = () => {
                     value={booking.plan || 'room'}
                     onChange={(e) => updateBooking({ plan: e.target.value as 'room' | 'breakfast' })}
                   >
-                    <option value="room">Room only</option>
-                    <option value="breakfast">Breakfast included (listing rate)</option>
+                    <option value="room">Room only (Best direct tariff)</option>
+                    <option value="breakfast">Artisanal Breakfast Included (+₹350/guest/nt)</option>
                   </select>
                 </label>
 
                 <div className="notice">
-                  Room quantity is separate from guest count. Maximum occupancy and extra-bed availability/charges must be confirmed by the hotel. The displayed rates are sample OTA snapshots, not live availability or confirmed direct tariffs.
+                  Occupancy pricing scales logically per guest. Rates include high-speed Wi-Fi and daily housekeeping. Extra-bed requests are subject to room space and hotel confirmation.
                 </div>
 
                 <button className="button button-dark full-button" type="submit">
