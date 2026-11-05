@@ -107,7 +107,14 @@ export const EnquiryModal: React.FC = () => {
               Send a <em>Direct Inquiry.</em>
             </h2>
             <p className="dialog-sub">
-              For suite inquiries, group reservations, or corporate tariffs, reach out directly to our management desk in MP Nagar, Bhopal.
+              For suite inquiries, group reservations, or corporate tariffs, call our desk directly at{' '}
+              <a href="tel:8269197272" style={{ color: 'var(--green-deep)', fontWeight: 700, textDecoration: 'underline' }}>
+                8269197272
+              </a>{' '}
+              or{' '}
+              <a href="tel:07554532682" style={{ color: 'var(--green-deep)', fontWeight: 700, textDecoration: 'underline' }}>
+                0755 4532682
+              </a>, or submit your details below.
             </p>
 
             <form onSubmit={handleSubmit}>

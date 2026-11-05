@@ -85,7 +85,7 @@ const defaultPaymentSettings: HotelPaymentSettings = {
   enableLiveGateways: false,
   cancellationPolicyNotice:
     'Free cancellation up to 48 hours prior to check-in. Non-refundable within 24 hours of arrival.',
-  supportPhone: '+91 755 255 3300',
+  supportPhone: '8269197272 / 0755 4532682',
   supportEmail: 'hotelroopcliff@gmail.com',
 };
 
@@ -213,7 +213,13 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [paymentSettings, setPaymentSettings] = useState<HotelPaymentSettings>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_SETTINGS);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (!parsed.supportPhone || parsed.supportPhone === '+91 755 255 3300') {
+          parsed.supportPhone = '8269197272 / 0755 4532682';
+        }
+        return parsed;
+      }
     } catch {
       // fallback
     }

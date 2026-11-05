@@ -31,8 +31,18 @@ export const LocationPage: React.FC = () => {
               <h2 style={{ font: '34px var(--serif)', fontWeight: 400, marginTop: '28px' }}>
                 Roop Cliff, Bhopal
               </h2>
-              <p style={{ fontSize: '12px', lineHeight: 2, color: '#74796f', marginBottom: '20px' }}>
+              <p style={{ fontSize: '12px', lineHeight: 2, color: '#74796f', marginBottom: '10px' }}>
                 Plot No. 33, Zone-I, Maharana Pratap Nagar, Narmadapuram Road, near Chetak Bridge, Bhopal, Madhya Pradesh 462011.
+              </p>
+              <p style={{ fontSize: '13px', lineHeight: 1.8, color: '#142E25', marginBottom: '20px' }}>
+                <strong>Concierge &amp; Front Desk:</strong>{' '}
+                <a href="tel:8269197272" className="hover:underline" style={{ color: 'var(--green-deep)', fontWeight: 700 }}>
+                  8269197272
+                </a>
+                {' · '}
+                <a href="tel:07554532682" className="hover:underline" style={{ color: 'var(--green-deep)', fontWeight: 700 }}>
+                  0755 4532682
+                </a>
               </p>
               <a
                 className="button button-dark"
@@ -54,6 +64,12 @@ export const LocationPage: React.FC = () => {
               <div className="summary-line">
                 <span>Landmark</span>
                 <strong>Chetak Bridge</strong>
+              </div>
+              <div className="summary-line">
+                <span>Phone / Desk</span>
+                <strong>
+                  <a href="tel:8269197272" className="hover:underline">8269197272</a>, <a href="tel:07554532682" className="hover:underline">0755 4532682</a>
+                </strong>
               </div>
               <div className="summary-line">
                 <span>Address status</span>

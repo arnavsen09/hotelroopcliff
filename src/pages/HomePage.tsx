@@ -679,6 +679,16 @@ export const HomePage: React.FC = () => {
                   <br />
                   Narmadapuram Road, Near Chetak Bridge, Bhopal, MP 462011
                 </p>
+                <p style={{ margin: '8px 0 14px', fontSize: '13px', color: '#16221C' }}>
+                  <strong>Concierge &amp; Desk:</strong>{' '}
+                  <a href="tel:8269197272" className="hover:underline" style={{ color: 'var(--green-deep)', fontWeight: 700 }}>
+                    8269197272
+                  </a>
+                  {' · '}
+                  <a href="tel:07554532682" className="hover:underline" style={{ color: 'var(--green-deep)', fontWeight: 700 }}>
+                    0755 4532682
+                  </a>
+                </p>
                 <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
                   <a
                     className="text-link"

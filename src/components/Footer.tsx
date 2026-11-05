@@ -71,8 +71,22 @@ export const Footer: React.FC<FooterProps> = () => {
             Bhopal, Madhya Pradesh 462011, India
           </p>
           <div style={{ marginTop: '14px', fontSize: '12px', color: '#ECC870' }}>
-            Concierge Phone: <a href="tel:+917552553300" className="hover:underline">+91 755 255 3300</a><br />
-            Direct Inquiries: <a href="mailto:hotelroopcliff@gmail.com" className="hover:underline">hotelroopcliff@gmail.com</a>
+            <div style={{ marginBottom: '4px' }}>
+              Concierge Phone:{' '}
+              <a href="tel:8269197272" className="hover:underline font-semibold text-[#FAF8F5]">
+                8269197272
+              </a>
+              {' · '}
+              <a href="tel:07554532682" className="hover:underline font-semibold text-[#FAF8F5]">
+                0755 4532682
+              </a>
+            </div>
+            <div>
+              Direct Inquiries:{' '}
+              <a href="mailto:hotelroopcliff@gmail.com" className="hover:underline">
+                hotelroopcliff@gmail.com
+              </a>
+            </div>
           </div>
         </div>
 

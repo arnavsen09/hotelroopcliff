@@ -881,6 +881,7 @@ export const AdminPage: React.FC = () => {
                         type="text"
                         value={paymentSettings.supportPhone}
                         onChange={(e) => updatePaymentSettings({ supportPhone: e.target.value })}
+                        placeholder="8269197272 / 0755 4532682"
                       />
                     </label>
                   </div>

@@ -15,6 +15,15 @@ export const Header: React.FC = () => {
 
   return (
     <>
+      {/* Royal Top Concierge Bar */}
+      <div className="announcement">
+        <span className="hidden sm:inline">ROOP CLIFF HOTEL · ZONE-I, MP NAGAR, BHOPAL</span>
+        <span className="sm:hidden">ROOP CLIFF BHOPAL</span>
+        <span>
+          CALL: <a href="tel:8269197272" className="hover:underline text-[var(--gold-light)] font-bold">8269197272</a> · <a href="tel:07554532682" className="hover:underline text-[var(--gold-light)] font-bold">0755 4532682</a>
+        </span>
+      </div>
+
       {/* Minimalist Editorial Luxury Top Header */}
       <header className="site-header" id="top">
         {/* Brand Zone: Roop Cliff Hotel */}
